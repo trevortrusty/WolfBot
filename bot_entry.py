@@ -53,9 +53,13 @@ async def wolf(ctx, inuse=inuse):
         session.start()
         begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg",'
         end = ']'
-        
-        counter = 0
-        await ctx.send(f'```In[{counter}]:=    ```')
+    
+        n = 0
+        # Embed message
+        in_message = discord.Embed(
+            title = f'**In[{n}]:=**')
+        await ctx.send(embed = in_message)
+        # await ctx.send(f'```In[{n}]:=    ```')
         msg = await client.wait_for('message', check = check)
         export = begin + msg.content + end
         while msg.content != 'exit' :
@@ -65,8 +69,9 @@ async def wolf(ctx, inuse=inuse):
                         session.evaluate(wlexpr(export))
                         enlarge()
                         await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.png'))
-                    counter = counter + 1
-                    await ctx.send(f'```In[{counter}]:=    ```')
+                    n = n + 1
+                    # await ctx.send(f'```In[{n}]:=    ```')
+                    await ctx.send(embed = in_message)
                     msg = await client.wait_for('message', check = check)
                     export = begin + msg.content + end
                 except WolframEvaluationException as err:
@@ -75,12 +80,11 @@ async def wolf(ctx, inuse=inuse):
         session.terminate()
 
         # Send Embed message for end of session #
-        embed = discord.Embed(
+        end_message = discord.Embed(
             title = f'**Wolfram session terminated!**', 
             color = discord.Color.blue(), 
             description = f'Session started by\n{ctx.message.author.mention}')
-        await ctx.send(embed = embed)
-        # await ctx.send('>>> Wolfram session terminated!')
+        await ctx.send(embed = end_message)
     else:
         await ctx.send('>>> WolfBot already in use in another channel')
 client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
