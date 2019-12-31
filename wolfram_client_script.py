@@ -1,4 +1,7 @@
-## import wolfram stuff
+## 
+  # this is just a script for testing the Wolfram Client for Python. 
+  # This file is not related or used by the bot
+##
 from wolframclient.evaluation import WolframLanguageSession
 from wolframclient.language import wl, wlexpr
 session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
@@ -11,7 +14,7 @@ session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram E
 # 	counter = counter + 1
 # session.terminate()
 
-begin = r'Export["D:\\dev\\discordbots\\Wolfram\\output\\output.jpg",'
+begin = r'Export["D:\\dev\\discordbots\\WolfBot\\output\\output.jpg",'
 end = ']'
 
 msg = 'none'

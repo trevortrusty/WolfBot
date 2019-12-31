@@ -12,7 +12,7 @@ from PIL import Image
 
 
 def enlarge():
-    img = Image.open('D:/dev/discordbots/Wolfram/output/output.png', 'r')
+    img = Image.open('D:/dev/discordbots/WolfBot/output/output.png', 'r')
     img_w, img_h = img.size
     if img_w < 100 and img_h < 40:
         background = Image.new('RGBA', (100, 40), (255, 255, 255, 255))
@@ -20,7 +20,7 @@ def enlarge():
         # offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
         # background.paste(img, offset)
         background.paste(img,(15,12))
-        background.save('D:/dev/discordbots/Wolfram/output/output.png')
+        background.save('D:/dev/discordbots/WolfBot/output/output.png')
 
 
 client = commands.Bot(command_prefix = '$')
@@ -38,7 +38,7 @@ async def wolf(ctx):
 
     session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
     
-    begin = r'Export["D:\\dev\\discordbots\\Wolfram\\output\\output.png",'
+    begin = r'Export["D:\\dev\\discordbots\\WolfBot\\output\\output.png",'
     end = ']'
     
     counter = 0
@@ -50,7 +50,7 @@ async def wolf(ctx):
             async with ctx.typing():
                 session.evaluate(export)
                 enlarge()
-                await ctx.send(file=discord.File('D:\dev\discordbots\Wolfram\output\output.png'))
+                await ctx.send(file=discord.File('D:\dev\discordbots\WolfBot\output\output.png'))
             #await ctx.send(f'```Out[{counter}]:= {(session.evaluate(wlexpr(msg.content)))}```')
             counter = counter + 1
             await ctx.send(f'```In[{counter}]:=    ```')
