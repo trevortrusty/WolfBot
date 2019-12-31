@@ -23,6 +23,7 @@ sak = SecuredAuthenticationKey(
     'dbbLmj8rDSrTEe0A+baPcMIFgFhmVPfFMdLg4trDuFc=')
 #
 
+# Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
     img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
     img_w, img_h = img.size
@@ -32,6 +33,12 @@ def enlarge():
         background.paste(img,(15,12))
         background.save('D:/dev/discordbots/WolfBot/output/output.png')
 
+# Creates a discord.Embed object #
+def createEmbed(t):
+    # Embed message
+    embed = discord.Embed(
+        title = t)
+    return embed
 
 client = commands.Bot(command_prefix = '$')
 
@@ -55,11 +62,11 @@ async def wolf(ctx, inuse=inuse):
         end = ']'
     
         n = 0
+
         # Embed message
-        in_message = discord.Embed(
-            title = f'**In[{n}]:=**')
+        in_message = createEmbed(f'**In[{n}]:=**')
         await ctx.send(embed = in_message)
-        # await ctx.send(f'```In[{n}]:=    ```')
+        
         msg = await client.wait_for('message', check = check)
         export = begin + msg.content + end
         while msg.content != 'exit' :
@@ -68,9 +75,11 @@ async def wolf(ctx, inuse=inuse):
                     async with ctx.typing():
                         session.evaluate(wlexpr(export))
                         enlarge()
+                        out_message = createEmbed(f'**Out[{n}]:=**')
+                        await ctx.send(embed = out_message)
                         await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.png'))
                     n = n + 1
-                    # await ctx.send(f'```In[{n}]:=    ```')
+                    in_message = createEmbed(f'**In[{n}]:=**')
                     await ctx.send(embed = in_message)
                     msg = await client.wait_for('message', check = check)
                     export = begin + msg.content + end
