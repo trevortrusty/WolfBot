@@ -34,10 +34,10 @@ def enlarge():
     img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
     img_w, img_h = img.size
     if img_w < 100 and img_h < 40:
-        background = Image.new('RGBA', (100, 40), (255, 255, 255, 255))
+        background = Image.new('RGB', (100, 40), (255, 255, 255, 255))
         bg_w, bg_h = background.size
         background.paste(img,(15,12))
-        background.save('D:/dev/discordbots/WolfBot/output/output.png')
+        background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
 
 # Creates a discord.Embed object #
 def createEmbed(t):
@@ -59,45 +59,44 @@ async def wolf(ctx, inuse=inuse):
     def check(m):
         return m.channel == channel
 
-    # #Handle any user attempting to use bot while the kernel is in use in another process already
-    # try:
-    #     #session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
-    #     session = WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
-    # except WolframKernelException:
-    #     error_message = createEmbed('WolfBot already in use by another user!')
-    #     await ctx.send(embed = error_message)
+    #Handle any user attempting to use bot while the kernel is in use in another process already
+    try:
+        session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
+        #session = WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
+    except WolframKernelException:
+        error_message = createEmbed('WolfBot already in use by another user!')
+        await ctx.send(embed = error_message)
 
-    # session.start()
-    async with WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe') as session:
-        begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg",'
-        end = ']'
+    session.start()
+    begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg",'
+    end = ']'
 
-        n = 0
+    n = 0
 
-        # Embed message
-        in_message = createEmbed(f'**In[{n}]:=**')
-        await ctx.send(embed = in_message)
-        
-        msg = await client.wait_for('message', check = check)
-        export = begin + msg.content + end
-        while msg.content != 'exit' :
-            if msg.content != 'exit':
-                try:
-                    async with ctx.typing():
-                        await session.evaluate(wlexpr(export))
-                        enlarge()
-                        out_message = createEmbed(f'**Out[{n}]:=**')
-                        await ctx.send(embed = out_message)
-                        await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.png'))
-                    n = n + 1
-                    in_message = createEmbed(f'**In[{n}]:=**')
-                    await ctx.send(embed = in_message)
-                    msg = await client.wait_for('message', check = check)
-                    export = begin + msg.content + end
-                except WolframEvaluationException as err:
-                    await ctx.send('Evaluation error: ', err)
+    # Embed message
+    in_message = createEmbed(f'**In[{n}]:=**')
+    await ctx.send(embed = in_message)
+    
+    msg = await client.wait_for('message', check = check)
+    export = begin + msg.content + end
+    while msg.content != 'exit' :
+        if msg.content != 'exit':
+            try:
+                async with ctx.typing():
+                    session.evaluate(wlexpr(export))
+                    enlarge()
+                    out_message = createEmbed(f'**Out[{n}]:=**')
+                    await ctx.send(embed = out_message)
+                    await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.jpg'))
+                n = n + 1
+                in_message = createEmbed(f'**In[{n}]:=**')
+                await ctx.send(embed = in_message)
+                msg = await client.wait_for('message', check = check)
+                export = begin + msg.content + end
+            except WolframEvaluationException as err:
+                await ctx.send('Evaluation error: ', err)
     # session.terminate()
-
+    session.terminate()
     # Send Embed message for end of session #
     end_message = discord.Embed(
         title = f'**Wolfram session terminated!**', 
