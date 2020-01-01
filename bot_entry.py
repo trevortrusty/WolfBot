@@ -6,11 +6,17 @@ from discord.ext import commands, tasks
 from collections import defaultdict
 from discord.utils import get
 
-from wolframclient.evaluation import WolframLanguageSession
+from wolframclient.evaluation import WolframLanguageSession, WolframLanguageAsyncSession
 from wolframclient.language import wl, wlexpr
 from wolframclient.evaluation import SecuredAuthenticationKey, WolframCloudSession
 from wolframclient.exception import WolframEvaluationException
+from wolframclient.exception import WolframKernelException
 from PIL import Image
+
+# Tracemelloc
+import tracemalloc
+
+tracemalloc.start()
 
 # Is wolf bot running in server already?
 inuse = False
@@ -49,18 +55,23 @@ async def on_ready():
 
 @client.command()
 async def wolf(ctx, inuse=inuse):
-    if not inuse:
-        inuse = True
-        channel = ctx.message.channel
-        def check(m):
-            return m.channel == channel
+    channel = ctx.message.channel
+    def check(m):
+        return m.channel == channel
 
-        session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
+    # #Handle any user attempting to use bot while the kernel is in use in another process already
+    # try:
+    #     #session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
+    #     session = WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
+    # except WolframKernelException:
+    #     error_message = createEmbed('WolfBot already in use by another user!')
+    #     await ctx.send(embed = error_message)
 
-        session.start()
+    # session.start()
+    async with WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe') as session:
         begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg",'
         end = ']'
-    
+
         n = 0
 
         # Embed message
@@ -73,7 +84,7 @@ async def wolf(ctx, inuse=inuse):
             if msg.content != 'exit':
                 try:
                     async with ctx.typing():
-                        session.evaluate(wlexpr(export))
+                        await session.evaluate(wlexpr(export))
                         enlarge()
                         out_message = createEmbed(f'**Out[{n}]:=**')
                         await ctx.send(embed = out_message)
@@ -85,17 +96,15 @@ async def wolf(ctx, inuse=inuse):
                     export = begin + msg.content + end
                 except WolframEvaluationException as err:
                     await ctx.send('Evaluation error: ', err)
-        inuse = False
-        session.terminate()
+    # session.terminate()
 
-        # Send Embed message for end of session #
-        end_message = discord.Embed(
-            title = f'**Wolfram session terminated!**', 
-            color = discord.Color.blue(), 
-            description = f'Session started by\n{ctx.message.author.mention}')
-        await ctx.send(embed = end_message)
-    else:
-        await ctx.send('>>> WolfBot already in use in another channel')
+    # Send Embed message for end of session #
+    end_message = discord.Embed(
+        title = f'**Wolfram session terminated!**', 
+        color = discord.Color.blue(), 
+        description = f'Session started by\n{ctx.message.author.mention}')
+    await ctx.send(embed = end_message)
+
 client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
 
 
