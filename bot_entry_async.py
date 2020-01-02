@@ -39,12 +39,12 @@ def enlarge():
         background.paste(img,(15,12))
         background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
 
-    img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
-    if img_h < 40:
-        background = Image.new('RGB', (img_w, 40), (255, 255, 255, 255))
-        bg_w, bg_h = background.size
-        background.paste(img,(15,12))
-        background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
+    # img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
+    # if img_h < 40:
+    #     background = Image.new('RGB', (img_w, 40), (255, 255, 255, 255))
+    #     bg_w, bg_h = background.size
+    #     background.paste(img,(15,12))
+    #     background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
 
 # Creates a discord.Embed object #
 def createEmbed(t):

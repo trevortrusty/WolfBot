@@ -12,6 +12,12 @@ from wolframclient.evaluation import SecuredAuthenticationKey, WolframCloudSessi
 from wolframclient.exception import WolframEvaluationException, WolframLanguageException, WolframKernelException
 from PIL import Image
 
+# Define paths
+img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
+    #img_path = '/home/pi/WolfBot/output/output.jpg'
+kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
+    #kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
+
 # Authentication Key
 sak = SecuredAuthenticationKey(
 
@@ -22,20 +28,13 @@ sak = SecuredAuthenticationKey(
 
 # Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
-    img = Image.open('/output/output.jpg', 'r')
+    img = Image.open(img_path, 'r')
     img_w, img_h = img.size
-    if img_w < 100:
-        background = Image.new('RGB', (img_w + 125, img_h), (255, 255, 255, 255))
-        bg_w, bg_h = background.size
-        background.paste(img,(15,12))
-        background.save('/output/output.jpg')
 
-    img = Image.open('/output/output.jpg', 'r')
-    if img_h < 40:
-        background = Image.new('RGB', (img_w, 40), (255, 255, 255, 255))
-        bg_w, bg_h = background.size
-        background.paste(img,(15,12))
-        background.save('/output/output.jpg')
+    background = Image.new('RGB', (img_w + 25, img_h + 25), (255, 255, 255, 255))
+    bg_w, bg_h = background.size
+    background.paste(img,(13,12))
+    background.save(img_path)
 
 # Creates a discord.Embed object #
 def createEmbed(t):
@@ -59,7 +58,7 @@ async def session(ctx):
         def check(m):
             return m.channel == channel and (m.content).startswith('WL ') and m.author == ctx.message.author
 
-    async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
+    async with WolframLanguageAsyncSession(kernel_path) as session:
 
         async with ctx.typing():
             # Start Asynchronous Wolfram Kernel thread #
@@ -69,7 +68,7 @@ async def session(ctx):
             await ctx.send(embed = start_alert)
 
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
-        begin = 'Export["/home/pi/WolfBot/output/output.jpg", TimeConstrained['
+        begin = f'Export["{img_path}", TimeConstrained['
         end = ', 60, "Your computation has exceeded one minute."]]'
 
         # Wait for discord user to enter input, and save message to msg.
@@ -89,10 +88,10 @@ async def session(ctx):
                 try:
                     async with ctx.typing():
                         await session.evaluate(wlexpr(export))
-                        #enlarge()
+                        enlarge()
                         
                         # Send image from Wolfram calculation results
-                        await ctx.send(file=discord.File('/home/pi/WolfBot/output/output.jpg'))
+                        await ctx.send(file=discord.File(img_path))
                     
                     # Wait for new input from user
                     msg = await client.wait_for('message', check = check)
