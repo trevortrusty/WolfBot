@@ -60,11 +60,10 @@ async def session(ctx):
 
     async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
 
-        # Start Asynchronous Wolfram Kernel thread #
-        await session.start()
-
-        # Tell user that the session has successfully started
         async with ctx.typing():
+            # Start Asynchronous Wolfram Kernel thread #
+            await session.start()
+            # Tell user that the session has successfully started
             start_alert = createEmbed('**Wolfram Session Started!**')
             await ctx.send(embed = start_alert)
 
