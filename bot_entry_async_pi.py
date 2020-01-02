@@ -56,7 +56,7 @@ async def on_ready():
 async def session(ctx, inuse=inuse):
     channel = ctx.message.channel
     def check(m):
-        return m.channel == channel and (m.content).startswith('WL ')
+        return m.channel == channel and (m.content).startswith('WL ') and m.author == ctx.message.author
 
     async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
 
