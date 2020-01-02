@@ -22,10 +22,15 @@ while msg != 'exit':
 	counter = 0
 	msg = input(f'In[{counter}]:= ')
 	export = begin + msg + end
-	#expression = wlexpr(msg)
-	output = session.evaluate(export)
-	print(export)
-	#print(f'Out[{counter}]:= {output}')
+
+	# output = session.evaluate(export)
+	# print(export)
+
+	if session.evaluate(export):
+		print(export)
+	else:
+		print("evaluation error")
+
 	counter = counter + 1
 session.terminate()
 

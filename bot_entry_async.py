@@ -61,24 +61,15 @@ async def on_ready():
 
 
 @client.command()
-async def wolf(ctx, inuse=inuse):
+async def session(ctx, inuse=inuse):
     channel = ctx.message.channel
     def check(m):
-        return m.channel == channel
+        return m.channel == channel and (m.content).startswith('WL ')
 
-    # #Handle any user attempting to use bot while the kernel is in use in another process already
-    # try:
-    #     #session = WolframLanguageSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
-    #     session = WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe')
-    # except WolframKernelException:
-    #     error_message = createEmbed('WolfBot already in use by another user!')
-    #     await ctx.send(embed = error_message)
-
-    # session.start()
     async with WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe') as session:
         await session.start()
-        begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg",'
-        end = ']'
+        begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg", TimeConstrained['
+        end = ', 60, "Your computation has exceeded one minute."]]'
 
         n = 0
 
@@ -86,22 +77,33 @@ async def wolf(ctx, inuse=inuse):
         in_message = createEmbed(f'**In[{n}]:=**')
         await ctx.send(embed = in_message)
         
-        msg = await client.wait_for('message', check = check)
-        export = begin + msg.content + end
-        while msg.content != 'exit' :
-            if msg.content != 'exit':
+        msg = await client.wait_for('message', check = check) # wait for user input, save message object to msg
+        wolfcommand = msg.content
+        wolfcommand = wolfcommand.replace('WL ', '')
+        export = begin + wolfcommand + end
+        while msg.content != 'WL exit' :
+            # if msg.content != 'WL exit' and (msg.content).startswith('WL '):
+            if msg.content != 'WL exit':
                 try:
                     async with ctx.typing():
                         await session.evaluate(wlexpr(export))
                         #enlarge()
                         out_message = createEmbed(f'**Out[{n}]:=**')
+
+
+                        # out_message = discord.Embed(
+                        #     title = f'**Out[{n}]:=**')
+                        # out_message.set_image(url = 'D:/dev/discordbots/WolfBot/output/output.jpg')
+
                         await ctx.send(embed = out_message)
                         await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.jpg'))
                     n = n + 1
                     in_message = createEmbed(f'**In[{n}]:=**')
                     await ctx.send(embed = in_message)
-                    msg = await client.wait_for('message', check = check)
-                    export = begin + msg.content + end
+                    msg = await client.wait_for('message', check = check) # wait for user input, save message object to msg
+                    wolfcommand = msg.content
+                    wolfcommand = wolfcommand.replace('WL ', '')
+                    export = begin + wolfcommand + end
                 except WolframEvaluationException as err:
                     await ctx.send('Evaluation error: ', err)
         # session.terminate()
