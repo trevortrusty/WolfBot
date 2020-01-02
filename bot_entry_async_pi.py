@@ -66,7 +66,7 @@ async def session(ctx):
         # Tell user that the session has successfully started
         async with ctx.typing():
             start_alert = createEmbed('**Wolfram Session Started!**')
-            await ctx.send(embed = end_message)
+            await ctx.send(embed = start_alert)
 
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         begin = 'Export["/home/pi/WolfBot/output/output.jpg", TimeConstrained['
