@@ -100,7 +100,8 @@ async def session(ctx):
                     wolfcommand = wolfcommand.replace('WL ', '')
                     export = begin + wolfcommand + end
                 except WolframLanguageException as err:
-                    await ctx.send('Wolfram Error: ', err)
+                    error = err
+                    await ctx.send(error)
 
         # Loop seninent value detected, closes connection to wolfram kernel
         await session.stop()
