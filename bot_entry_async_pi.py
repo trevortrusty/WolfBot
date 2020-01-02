@@ -9,8 +9,7 @@ from discord.utils import get
 from wolframclient.evaluation import WolframLanguageSession, WolframLanguageAsyncSession
 from wolframclient.language import wl, wlexpr
 from wolframclient.evaluation import SecuredAuthenticationKey, WolframCloudSession
-from wolframclient.exception import WolframEvaluationException
-from wolframclient.exception import WolframKernelException
+from wolframclient.exception import WolframEvaluationException, WolframLanguageException, WolframKernelException
 from PIL import Image
 
 # Authentication Key
@@ -100,7 +99,7 @@ async def session(ctx):
                     wolfcommand = msg.content
                     wolfcommand = wolfcommand.replace('WL ', '')
                     export = begin + wolfcommand + end
-                except Exception as err:
+                except WolframLanguageException as err:
                     await ctx.send('Wolfram Error: ', err)
 
         # Loop seninent value detected, closes connection to wolfram kernel
