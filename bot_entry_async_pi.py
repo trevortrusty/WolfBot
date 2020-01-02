@@ -13,10 +13,10 @@ from wolframclient.exception import WolframEvaluationException, WolframLanguageE
 from PIL import Image
 
 # Define paths
-img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
-    #img_path = '/home/pi/WolfBot/output/output.jpg'
-kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
-    #kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
+#img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
+img_path = '/home/pi/WolfBot/output/output.jpg'
+#kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
+kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
 
 # Authentication Key
 sak = SecuredAuthenticationKey(
