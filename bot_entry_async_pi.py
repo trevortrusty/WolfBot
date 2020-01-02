@@ -13,14 +13,6 @@ from wolframclient.exception import WolframEvaluationException
 from wolframclient.exception import WolframKernelException
 from PIL import Image
 
-# Tracemelloc
-import tracemalloc
-
-tracemalloc.start()
-
-# Is wolf bot running in server already?
-inuse = False
-
 # Authentication Key
 sak = SecuredAuthenticationKey(
 
@@ -67,47 +59,47 @@ async def session(ctx, inuse=inuse):
         return m.channel == channel and (m.content).startswith('WL ')
 
     async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
+
+        # Start Asynchronous Wolfram Kernel thread #
         await session.start()
+
+        # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         begin = 'Export["/home/pi/WolfBot/output/output.jpg", TimeConstrained['
         end = ', 60, "Your computation has exceeded one minute."]]'
 
-        n = 0
+        # Wait for discord user to enter input, and save message to msg.
+        msg = await client.wait_for('message', check = check)
 
-        # Embed message
-        in_message = createEmbed(f'**In[{n}]:=**')
-        await ctx.send(embed = in_message)
-
-        msg = await client.wait_for('message', check = check) # wait for user input, save message object to msg
-        wolfcommand = msg.content
+        # save string from message object to a string variable
+        wolfcommand = msg.content 
         wolfcommand = wolfcommand.replace('WL ', '')
-        export = begin + wolfcommand + end
+
+        # concatenate the full command for passing to Wolfram
+        export = begin + wolfcommand + end 
+
+
+        # Loop session, sending output from initial input, taking in new input, repeat.
         while msg.content != 'WL exit' :
-            # if msg.content != 'WL exit' and (msg.content).startswith('WL '):
             if msg.content != 'WL exit':
                 try:
                     async with ctx.typing():
                         await session.evaluate(wlexpr(export))
                         #enlarge()
-                        out_message = createEmbed(f'**Out[{n}]:=**')
-
-
-                        # out_message = discord.Embed(
-                        #     title = f'**Out[{n}]:=**')
-                        # out_message.set_image(url = 'D:/dev/discordbots/WolfBot/output/output.jpg')
-
-                        await ctx.send(embed = out_message)
+                        
+                        # Send image from Wolfram calculation results
                         await ctx.send(file=discord.File('/home/pi/WolfBot/output/output.jpg'))
-                    n = n + 1
-                    in_message = createEmbed(f'**In[{n}]:=**')
-                    await ctx.send(embed = in_message)
-                    msg = await client.wait_for('message', check = check) # wait for user input, save message object to msg
+                    
+                    # Wait for new input from user
+                    msg = await client.wait_for('message', check = check)
                     wolfcommand = msg.content
                     wolfcommand = wolfcommand.replace('WL ', '')
                     export = begin + wolfcommand + end
                 except WolframEvaluationException as err:
                     await ctx.send('Evaluation error: ', err)
-        # session.terminate()
+
+        # Loop seninent value detected, closes connection to wolfram kernel
         await session.stop()
+
     # Send Embed message for end of session #
     end_message = discord.Embed(
         title = f'**Wolfram session terminated!**',
