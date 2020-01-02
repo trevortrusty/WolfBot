@@ -51,6 +51,7 @@ async def on_ready():
 
 
 @client.command()
+@commands.has_any_role('Admin', 'Bot Henchmen')
 async def session(ctx):
 
     async with ctx.typing():
