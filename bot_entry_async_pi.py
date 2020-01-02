@@ -54,9 +54,11 @@ async def on_ready():
 
 @client.command()
 async def session(ctx):
-    channel = ctx.message.channel
-    def check(m):
-        return m.channel == channel and (m.content).startswith('WL ') and m.author == ctx.message.author
+
+    async with ctx.typing():
+        channel = ctx.message.channel
+        def check(m):
+            return m.channel == channel and (m.content).startswith('WL ') and m.author == ctx.message.author
 
     async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
 
@@ -98,8 +100,8 @@ async def session(ctx):
                     wolfcommand = msg.content
                     wolfcommand = wolfcommand.replace('WL ', '')
                     export = begin + wolfcommand + end
-                except WolframEvaluationException as err:
-                    await ctx.send('Evaluation error: ', err)
+                except Exception as err:
+                    await ctx.send('Wolfram Error: ', err)
 
         # Loop seninent value detected, closes connection to wolfram kernel
         await session.stop()
