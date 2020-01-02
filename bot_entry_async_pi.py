@@ -31,20 +31,20 @@ sak = SecuredAuthenticationKey(
 
 # Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
-    img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
+    img = Image.open('/output/output.jpg', 'r')
     img_w, img_h = img.size
     if img_w < 100:
         background = Image.new('RGB', (img_w + 125, img_h), (255, 255, 255, 255))
         bg_w, bg_h = background.size
         background.paste(img,(15,12))
-        background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
+        background.save('/output/output.jpg')
 
-    img = Image.open('D:/dev/discordbots/WolfBot/output/output.jpg', 'r')
+    img = Image.open('/output/output.jpg', 'r')
     if img_h < 40:
         background = Image.new('RGB', (img_w, 40), (255, 255, 255, 255))
         bg_w, bg_h = background.size
         background.paste(img,(15,12))
-        background.save('D:/dev/discordbots/WolfBot/output/output.jpg')
+        background.save('/output/output.jpg')
 
 # Creates a discord.Embed object #
 def createEmbed(t):
@@ -66,9 +66,9 @@ async def session(ctx, inuse=inuse):
     def check(m):
         return m.channel == channel and (m.content).startswith('WL ')
 
-    async with WolframLanguageAsyncSession('D:\\Program Files\\Wolfram Research\\Wolfram Engine\\12.0\\WolframKernel.exe') as session:
+    async with WolframLanguageAsyncSession('/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel') as session:
         await session.start()
-        begin = 'Export["D:/dev/discordbots/WolfBot/output/output.jpg", TimeConstrained['
+        begin = 'Export["/home/pi/WolfBot/output/output.jpg", TimeConstrained['
         end = ', 60, "Your computation has exceeded one minute."]]'
 
         n = 0
@@ -96,7 +96,7 @@ async def session(ctx, inuse=inuse):
                         # out_message.set_image(url = 'D:/dev/discordbots/WolfBot/output/output.jpg')
 
                         await ctx.send(embed = out_message)
-                        await ctx.send(file=discord.File('D:/dev/discordbots/WolfBot/output/output.jpg'))
+                        await ctx.send(file=discord.File('/home/pi/WolfBot/output/output.jpg'))
                     n = n + 1
                     in_message = createEmbed(f'**In[{n}]:=**')
                     await ctx.send(embed = in_message)
