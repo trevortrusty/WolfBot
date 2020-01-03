@@ -13,10 +13,10 @@ from wolframclient.exception import WolframEvaluationException, WolframLanguageE
 from PIL import Image
 
 # Define paths
-#img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
-img_path = '/home/pi/WolfBot/output/output.jpg'
-#kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
-kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
+img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
+#img_path = '/home/pi/WolfBot/output/output.jpg'
+kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
+#kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
 
 # Authentication Key
 sak = SecuredAuthenticationKey(
@@ -57,7 +57,7 @@ async def session(ctx):
     async with ctx.typing():
         channel = ctx.message.channel
         def check(m):
-            return m.channel == channel and (m.content).startswith('WL ') and m.author == ctx.message.author
+            return m.channel == channel and ((m.content).startswith('wl ') or (m.content).startswith('```wl ')) and m.author == ctx.message.author
 
     async with WolframLanguageAsyncSession(kernel_path) as session:
 
@@ -80,15 +80,20 @@ async def session(ctx):
 
         # save string from message object to a string variable
         wolfcommand = msg.content 
-        wolfcommand = wolfcommand.replace('WL ', '')
+        if wolfcommand.startswith('wl '):
+            wolfcommand = wolfcommand.replace('wl ', '')
+        elif wolfcommand.startswith('```wl '):
+            wolfcommand = wolfcommand.replace('```', '')
+            wolfcommand = wolfcommand.replace('wl ', '')
+        #wolfcommand = wolfcommand.replace('wl ', '')
 
         # concatenate the full command for passing to Wolfram
         export = begin + wolfcommand + end 
 
 
         # Loop session, sending output from initial input, taking in new input, repeat.
-        while msg.content != 'WL exit' :
-            if msg.content != 'WL exit':
+        while msg.content != 'wl exit' and msg.content != '```wl exit' :
+            if msg.content != 'wl exit' and msg.content != '```wl exit':
                 try:
                     async with ctx.typing():
                         await session.evaluate(wlexpr(export))
@@ -99,8 +104,12 @@ async def session(ctx):
                     
                     # Wait for new input from user
                     msg = await client.wait_for('message', check = check)
-                    wolfcommand = msg.content
-                    wolfcommand = wolfcommand.replace('WL ', '')
+                    wolfcommand = msg.content 
+                    if wolfcommand.startswith('wl '):
+                        wolfcommand = wolfcommand.replace('wl ', '')
+                    elif wolfcommand.startswith('```wl '):
+                        wolfcommand = wolfcommand.replace('```', '')
+                        wolfcommand = wolfcommand.replace('wl ', '')
                     export = begin + wolfcommand + end
                 except WolframLanguageException as err:
                     error = err
@@ -117,6 +126,30 @@ async def session(ctx):
     await ctx.send(embed = end_message)
 
 
+@client.command()
+@commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
+async def bark(ctx, script):
+    # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
+    async with ctx.typing():
+        begin = f'Export["{img_path}", TimeConstrained['
+        end = ', 60, "Your computation has exceeded one minute."]]'
+        export = begin + script + end
+        
+        async with WolframLanguageAsyncSession(kernel_path) as session:
+            await session.evaluate(wlexpr(export))
+            enlarge()
+            
+            # Send image from Wolfram calculation results
+            await ctx.send(file=discord.File(img_path))
+
+            # Send Embed message
+            end_message = discord.Embed(
+                title = f'**Learn more about Wolfram**',
+                color = discord.Color.blue(),
+                description = f'Requested by\n{ctx.message.author.mention}',
+                url = 'https://reference.wolfram.com/language/')
+            end_message.set_thumbnail(url = 'https://media1.tenor.com/images/ed4da9a1bdbd4ff952638b19afa96506/tenor.gif?itemid=12660466')
+            await ctx.send(embed = end_message)
 
 client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
 
