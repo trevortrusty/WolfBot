@@ -12,6 +12,7 @@ from wolframclient.evaluation import SecuredAuthenticationKey, WolframCloudSessi
 from wolframclient.exception import WolframEvaluationException, WolframLanguageException, WolframKernelException
 from PIL import Image
 import PIL.ImageOps 
+import asyncio
 
 #Define paths
 img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
@@ -60,13 +61,12 @@ async def bark(ctx,*, script):
     # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
     async with ctx.typing():
         begin = f'Export["{img_path}", TimeConstrained[Style['
-        end = ', Large], 60, "Your computation has exceeded one minute."]]'
+        end = ', Large], 10, "Your computation has exceeded one minute."]]'
         export = begin + script + end
 
         #await session.start()
         try:
-            eval = await session.evaluate_wrap(wlexpr(export), timeout= 5)
-
+            eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
             # Check for errors before sending result
             log = str(eval.messages)
 
@@ -77,18 +77,31 @@ async def bark(ctx,*, script):
                 if (log).startswith('(\'Invalid syntax'):
                     log = createEmbed('Invalid syntax!')
                     await ctx.send(embed = log)
+                elif log.startswith('(\'Not enough memory available to rasterize Notebook expression.\',)'):
+                    log = createEmbed('Not enough memory available to rasterize Notebook expression.')
+                    await ctx.send(embed = log)
+                    await ctx.send(f'```{await session.evaluate_wrap(wlexpr(script), timeout = 5)}```')
                 else:
                     log = createEmbed(log)
+                    # try:
+                    #     await asyncio.wait_for(enlarge(), 10) # Time out image processing at 10 seconds
+                    # except Exception:
+                    #     log = createEmbed('Timeout Error: Computation took too long!')
+                    #     await ctx.send(embed = log)
                     enlarge()
                     await ctx.send(file=discord.File(img_path))
                     await ctx.send(embed = log) 
             else:
                 # No errors, continue
+                # try:
+                #     await asyncio.wait_for(enlarge(), 10) # Time out image processing at 10 seconds
+                # except Exception:
+                #     log = createEmbed('Timeout Error: Computation took too long!')
+                #     await ctx.send(embed = log)
                 enlarge()
-                
                 # Send image from Wolfram calculation results
                 await ctx.send(file=discord.File(img_path))
-        except TimeoutError:
+        except Exception:
             log = createEmbed('Timeout Error: Computation took too long!')
             await ctx.send(embed = log)
 
@@ -101,6 +114,12 @@ async def bark(ctx,*, script):
         end_message.set_thumbnail(url = 'https://media1.tenor.com/images/ed4da9a1bdbd4ff952638b19afa96506/tenor.gif?itemid=12660466')
         await ctx.send(embed = end_message)
         #await session.stop()
+
+
+@client.command()
+@commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
+async def stop(ctx,*, script):
+    session.terminate()
 
 client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
 

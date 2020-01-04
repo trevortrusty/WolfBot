@@ -11,7 +11,9 @@ from wolframclient.language import wl, wlexpr
 from wolframclient.evaluation import SecuredAuthenticationKey, WolframCloudSession
 from wolframclient.exception import WolframEvaluationException, WolframLanguageException, WolframKernelException
 from PIL import Image
+import PIL
 import PIL.ImageOps 
+import asyncio
 
 #Define paths
 img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
@@ -28,7 +30,7 @@ sak = SecuredAuthenticationKey(
 #
 
 # Enlarges image output from Wolfram calculation, and then saves as png #
-def enlarge():
+async def enlarge(ctx):
     img = Image.open(img_path, 'r')
     img_w, img_h = img.size
 
@@ -99,10 +101,15 @@ async def session(ctx):
                 try:
                     async with ctx.typing():
                         await session.evaluate(wlexpr(export))
-                        enlarge()
-                        
-                        # Send image from Wolfram calculation results
-                        await ctx.send(file=discord.File(img_path))
+                        # if not enlarge():
+                        #     await ctx.send('Not enough memory to perform this operation!')
+                        try:
+                            await asyncio.wait_for(enlarge(), 5) # Time out image processing at 10 seconds
+                        except Exception:
+                            log = createEmbed('Timeout Error: Computation took too long!')
+                            await ctx.send(embed = log)
+                            # Send image from Wolfram calculation results
+                            await ctx.send(file=discord.File(img_path))
                     
                     # Wait for new input from user
                     msg = await client.wait_for('message', check = check)
@@ -140,7 +147,7 @@ async def bark(ctx,*, script):
         async with WolframLanguageAsyncSession(kernel_path) as session:
             #await session.start()
             try:
-                eval = await session.evaluate_wrap(wlexpr(export), timeout= 5)
+                eval = await session.evaluate_wrap(wlexpr(export))
 
                 # Check for errors before sending result
                 log = str(eval.messages)
@@ -159,7 +166,8 @@ async def bark(ctx,*, script):
                         await ctx.send(embed = log) 
                 else:
                     # No errors, continue
-                    enlarge()
+                    if not enlarge():
+                        await ctx.send('Not enough memory to perform this operation!')
                     
                     # Send image from Wolfram calculation results
                     await ctx.send(file=discord.File(img_path))
