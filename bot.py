@@ -1,4 +1,4 @@
- #!/usr/bin/python3
+#! /usr/bin/python3
 
 import discord
 import os
@@ -60,8 +60,8 @@ session.start()
 async def bark(ctx,*, script):
     # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
     async with ctx.typing():
-        begin = f'Export["{img_path}", TimeConstrained[Style['
-        end = ', Large], 10, "Your computation has exceeded one minute."]]'
+        begin = f'Export["{img_path}", Style['
+        end = ', Large]]'
         export = begin + script + end
 
         #await session.start()
