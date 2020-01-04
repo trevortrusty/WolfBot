@@ -121,6 +121,12 @@ async def bark(ctx,*, script):
 async def stop(ctx,*, script):
     session.terminate()
 
+
+# Ping
+@client.command()
+async def ping(ctx):
+    await ctx.send(f'Pong! {round(client.latency *1000)} ms')
+    
 client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
 
 
