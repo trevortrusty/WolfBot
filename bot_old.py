@@ -13,13 +13,12 @@ from wolframclient.exception import WolframEvaluationException, WolframLanguageE
 from PIL import Image
 import PIL.ImageOps 
 import asyncio
-import embeds
 
 #Define paths
-img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
-#img_path = '/home/pi/WolfBot/output/output.jpg'
-kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
-#kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
+#img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
+img_path = '/home/pi/WolfBot/output/output.jpg'
+#kernel_path = 'D:/Program Files/Wolfram Research/Wolfram Engine/12.0/WolframKernel.exe'
+kernel_path = '/opt/Wolfram/WolframEngine/12.0/Executables/WolframKernel'
 
 # Authentication Key
 sak = SecuredAuthenticationKey(
@@ -40,6 +39,13 @@ def enlarge():
     final = PIL.ImageOps.invert(background)
     final.save(img_path)
 
+# Creates a discord.Embed object #
+def createEmbed(t):
+    # Embed message
+    embed = discord.Embed(
+        title = t)
+    return embed
+
 client = commands.Bot(command_prefix = '$')
 
 @client.event
@@ -58,36 +64,57 @@ async def bark(ctx,*, script):
         end = ', Large]]'
         export = begin + script + end
 
+        #await session.start()
         try:
-            # Evaluate given expression, exporting result as png
             eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
-
             # Check for errors before sending result
             log = str(eval.messages)
 
+            if len(log) > 256:
+                #log = log[0 : 255 : 1] # Shorten length of string to 255 characters to satify discord embed char limit
+                log = 'Errors were detected during computation'
             if log != 'None':
-                if(len(log) > 256):
-                    await ctx.send(embed = embeds.general_error)
-                elif (log).startswith('(\'Invalid syntax'):
-                    await ctx.send(embed = embeds.syntax_error)
+                if (log).startswith('(\'Invalid syntax'):
+                    log = createEmbed('Invalid syntax!')
+                    await ctx.send(embed = log)
                 elif log.startswith('(\'Not enough memory available to rasterize Notebook expression.\',)'):
-                    await ctx.send(embed = embeds.memory_error)
+                    log = createEmbed('Not enough memory available to rasterize Notebook expression.')
+                    await ctx.send(embed = log)
                     await ctx.send(f'```{await session.evaluate_wrap(wlexpr(script), timeout = 5)}```')
                 else:
-                    log = embeds.createEmbed(log)
+                    log = createEmbed(log)
+                    # try:
+                    #     await asyncio.wait_for(enlarge(), 10) # Time out image processing at 10 seconds
+                    # except Exception:
+                    #     log = createEmbed('Timeout Error: Computation took too long!')
+                    #     await ctx.send(embed = log)
                     enlarge()
                     await ctx.send(file=discord.File(img_path))
                     await ctx.send(embed = log) 
             else:
                 # No errors, continue
+                # try:
+                #     await asyncio.wait_for(enlarge(), 10) # Time out image processing at 10 seconds
+                # except Exception:
+                #     log = createEmbed('Timeout Error: Computation took too long!')
+                #     await ctx.send(embed = log)
                 enlarge()
                 # Send image from Wolfram calculation results
                 await ctx.send(file=discord.File(img_path))
         except Exception:
-            await ctx.send(embed = embeds.time_error)
+            log = createEmbed('Timeout Error: Computation took too long!')
+            await ctx.send(embed = log)
 
-        embeds.tail_message.description = f'Requested by\n{ctx.message.author.mention}'
-        await ctx.send(embed = embeds.tail_message)
+        # Send Goodbye Embed message
+        end_message = discord.Embed(
+            title = f'**Learn more the about Wolfram Language**',
+            color = discord.Color.blue(),
+            description = f'Requested by\n{ctx.message.author.mention}',
+            url = 'https://reference.wolfram.com/language/')
+        end_message.set_thumbnail(url = 'https://media1.tenor.com/images/ed4da9a1bdbd4ff952638b19afa96506/tenor.gif?itemid=12660466')
+        await ctx.send(embed = end_message)
+        #await session.stop()
+
 
 @client.command()
 @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
