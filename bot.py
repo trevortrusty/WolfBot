@@ -5,6 +5,7 @@ import os
 from discord.ext import commands, tasks
 
 client = commands.Bot(command_prefix = '$')
+client.remove_command('help')
 
 @client.command()
 async def load(ctx, extension):

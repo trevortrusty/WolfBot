@@ -34,9 +34,15 @@ time_error = discord.Embed(
 
 # Tail message
 tail_message = discord.Embed(
-            title = f'**Learn more the about Wolfram Language**',
-            color = discord.Color.blue(),
-            #description = f'Requested by\n{ctx.message.author.mention}',
-            url = 'https://reference.wolfram.com/language/'
+    title = f'**Learn more the about Wolfram Language**',
+    color = discord.Color.blue(),
+    #description = f'Requested by\n{ctx.message.author.mention}',
+    url = 'https://reference.wolfram.com/language/'
 )
 tail_message.set_thumbnail(url = 'https://media1.tenor.com/images/ed4da9a1bdbd4ff952638b19afa96506/tenor.gif?itemid=12660466')
+
+# help
+help_message = discord.Embed(
+    title = 'Testing!'
+)
+
