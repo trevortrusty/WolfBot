@@ -56,7 +56,7 @@ class Bark(commands.Cog):
             # begin = f'Export["{img_path}", Style['
             # end = ', Large]]'
             # export = begin + script + end
-            export = f'Export["{img_path}", Style[{script}, Large]]
+            export = f'Export["{img_path}", Style[{script}, Large]]'
             try:
                 # Evaluate given expression, exporting result as png
                 eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
