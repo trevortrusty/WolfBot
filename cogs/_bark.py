@@ -53,10 +53,10 @@ class Bark(commands.Cog):
     async def bark(self, ctx,*, script):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            begin = f'Export["{img_path}", Style['
-            end = ', Large]]'
-            export = begin + script + end
-
+            # begin = f'Export["{img_path}", Style['
+            # end = ', Large]]'
+            # export = begin + script + end
+            export = f'Export["{img_path}", Style[{script}, Large]]
             try:
                 # Evaluate given expression, exporting result as png
                 eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
