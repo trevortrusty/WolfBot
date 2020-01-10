@@ -102,7 +102,12 @@ class Bark(commands.Cog):
     # Ping
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send(f'Woof! {round(self.client.latency *1000)} ms')
+        ping_embed = discord.Embed(
+            title = f'Woof! {round(self.client.latency *1000)} ms',
+            color = discord.Color.gold()
+        )
+        ping_embed.set_footer(text = f'requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
+        await ctx.send(embed = ping_embed)
 
 def setup(client):
     client.add_cog(Bark(client))
