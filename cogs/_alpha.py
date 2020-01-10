@@ -13,7 +13,7 @@ import PIL.ImageOps
 import asyncio
 import embeds
 from  cogs._bark import session
-from cogs.paths import img_path, kernel_path
+from paths import img_path, kernel_path
 #Define paths
 # img_path = 'D:/dev/discordbots/WolfBot/output/output.jpg'
 #img_path = '/home/pi/WolfBot/output/output.jpg'
