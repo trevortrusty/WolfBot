@@ -52,7 +52,7 @@ help_message = discord.Embed(
     description='**For my documentation:**\n\n',
     url='https://reference.wolfram.com/language/')
     
-help_message.add_field(name="Commands", value='```diff\n- $bark <Wolfram expression>\n- $alpha <Wolfram Alpha Query>```')
+help_message.add_field(name="Commands", value='```diff\n- $bark <Wolfram expression>\n- $alpha <Wolfram Alpha Query>\n- $docs <mathematical operation/wolfram function>```')
 help_message.set_footer(text="Type $help to see commands or do help <command>")
 # await ctx.send(embed = help_message)
 
