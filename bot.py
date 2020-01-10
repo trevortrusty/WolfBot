@@ -4,6 +4,7 @@ import discord
 import os
 from discord.ext import commands, tasks
 
+import BotToken
 client = commands.Bot(command_prefix = '$')
 client.remove_command('help')
 
@@ -28,4 +29,4 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py') and filename.startswith('_'):
         client.load_extension(f'cogs.{filename[: -3]}')
 
-client.run('NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY')
+client.run(BotToken.token_str)
