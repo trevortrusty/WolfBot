@@ -1,1 +1,1 @@
-token_str = 'NjUzODA3MTM3NjkyMTg4Njcy.Xe8Xlg.-EDzSXrTejAAuJ2sCI-0mfwUxjY'
+token_str = 'NjUzODA3MTM3NjkyMTg4Njcy.Xhfoyw.nnWLwmaHry4FdaqsgyEnih2E4bs'
