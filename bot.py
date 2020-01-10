@@ -5,6 +5,8 @@ import os
 from discord.ext import commands, tasks
 
 import BotToken
+from paths import cogs_path
+
 client = commands.Bot(command_prefix = '$')
 client.remove_command('help')
 
@@ -24,7 +26,7 @@ async def reload(ctx, extension):
     client.load_extension(f'cogs.{extension}')
     await ctx.channel.purge(limit = 1)
 
-for filename in os.listdir('./cogs'):
+for filename in os.listdir(cogs_path):
 #for filename in os.listdir('./cogs'): ## windows
     if filename.endswith('.py') and filename.startswith('_'):
         client.load_extension(f'cogs.{filename[: -3]}')

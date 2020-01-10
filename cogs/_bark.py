@@ -12,7 +12,9 @@ from PIL import Image
 import PIL.ImageOps 
 import asyncio
 import embeds
-from cogs.paths import img_path, kernel_path
+# from cogs.paths import img_path, kernel_path
+# from paths import img
+from paths import img_path, kernel_path
 
 
 # Enlarges image output from Wolfram calculation, and then saves as png #
