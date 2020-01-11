@@ -28,7 +28,7 @@ async def reload(ctx, extension):
 
 for filename in os.listdir(cogs_path):
 #for filename in os.listdir('./cogs'): ## windows
-    if filename.endswith('.py') and filename.startswith('_'):
+    if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[: -3]}')
 
 client.run(BotToken.token_str)
