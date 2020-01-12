@@ -13,16 +13,16 @@ import PIL.ImageOps
 import asyncio
 import embeds
 # from  cogs.bark import session
-from paths import img_path, kernel_path
+from paths import img_path, kernel_path, wl_path, bl_path
 import csv
 import re
 import exceptions
 
 def wrap_wolf(s):
-    with open('D:/dev/discordbots/WolfBot/cogs/whitelist.csv', 'r') as f:
+    with open(wl_path, 'r') as f:
         reader = csv.reader(f)
         whitelist = list(reader)[0]
-    with open('D:/dev/discordbots/WolfBot/cogs/blacklist.csv', 'r') as f:
+    with open(bl_path, 'r') as f:
         reader = csv.reader(f)
         blacklist = list(reader)[0]    
 
