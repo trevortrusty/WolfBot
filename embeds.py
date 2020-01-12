@@ -49,7 +49,7 @@ tail_message.set_thumbnail(url = 'https://media1.tenor.com/images/ed4da9a1bdbd4f
 help_message = discord.Embed(
     title="WolfBot, fetching help!", 
     color=discord.Color.blue(), 
-    description='**For my documentation:**\n\n',
+    description='**To seek help with WolfBot or submit a bug report, join https://discord.gg/eyd376A:**\n\n',
     url='https://reference.wolfram.com/language/')
     
 help_message.add_field(name="Commands", value='```diff\n- $bark <Wolfram expression>\n- $alpha <Wolfram Alpha Query>\n- $docs <mathematical operation/wolfram function>```')

@@ -41,7 +41,7 @@ class Alpha(commands.Cog):
     #### Commands ####
         
     @commands.command()
-    @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
+    # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():

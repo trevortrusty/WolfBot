@@ -46,7 +46,7 @@ class Bark(commands.Cog):
         print('We have logged in as {0.user}'.format(self.client))
         
     @commands.command()
-    @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team', 'testing')
+    # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team', 'testing')
     async def bark(self, ctx,*, script):
         async with ctx.typing():
             try:
@@ -94,7 +94,7 @@ class Bark(commands.Cog):
             await ctx.send(embed = embeds.tail_message)
 
     @commands.command()
-    @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
+    @commands.has_any_role('Bot Henchmen', 'Development Team')
     async def stop(self, ctx):
         session.terminate()
 

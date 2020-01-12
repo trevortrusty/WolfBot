@@ -32,11 +32,11 @@ class Help(commands.Cog):
             if command == 'none':
                 await ctx.send(embed = embeds.help_message)
             elif command == 'bark':
-                await ctx.send('Nothing here')
+                await ctx.send('```$bark <Wolfram Code>```')
             elif command == 'alpha':
-                await ctx.send('Nothing here')
+                await ctx.send('```$alpha <Wolfram Alpha Query>```')
             elif command == 'docs':
-                await ctx.send('Nothing here')
+                await ctx.send('```$docs <Search keyword in the Wolfram Documentation```')
         # await ctx.send(embeds.__file__)
 
     @commands.command()
