@@ -39,13 +39,6 @@ class Bark(commands.Cog):
 
     
     #### Commands ####
-
-    # Echo
-    @commands.command()
-    @commands.has_any_role('Owners','Moderator', 'Admin')
-    async def echo(self, ctx, *, message): ## Repeats message given by user calling the command
-        await ctx.channel.purge(limit = 1)
-        await ctx.send(f'{message}')
     
     @commands.Cog.listener()
     async def on_ready(self):
