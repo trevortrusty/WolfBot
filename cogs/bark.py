@@ -14,9 +14,10 @@ import asyncio
 import embeds
 
 from paths import img_path, kernel_path
-
-
-
+import re
+import csv
+from functions import wrap_wolf
+import exceptions
 
 # Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
@@ -47,10 +48,10 @@ class Bark(commands.Cog):
     @commands.command()
     @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team', 'testing')
     async def bark(self, ctx,*, script):
-        # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            export = f'Export["{img_path}", Style[{script}, Large], Background -> None, ImageResolution -> 100]'
             try:
+                export = wrap_wolf(script)
+
                 # Evaluate given expression, exporting result as png
                 eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
 
@@ -78,11 +79,16 @@ class Bark(commands.Cog):
                         await ctx.send(embed = log) 
                 else:
                     # No errors, continue
-                    ######################enlarge()
                     # Send image from Wolfram calculation results
                     await ctx.send(file=discord.File(img_path))
-            except Exception:
+
+            except exceptions.WhiteListError as error:
+                await ctx.send(error.message)
+            except exceptions.BlackListError as error:
+                await ctx.send(error.message)
+            except asyncio.TimeoutError:
                 await ctx.send(embed = embeds.time_error)
+
             await session.evaluate(wlexpr('ClearAll["Global`*"]'))
             embeds.tail_message.description = f'Requested by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)

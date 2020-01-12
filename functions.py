@@ -12,18 +12,33 @@ from PIL import Image
 import PIL.ImageOps 
 import asyncio
 import embeds
-from  cogs.bark import session
+# from  cogs.bark import session
 from paths import img_path, kernel_path
-
-class WhiteListError(Exception):
-    def __init__(self, bad = 0):
-        if bad:
-            self.message = f'{bad} is not currently in our list of allowed functions! Please contact the dev team to have it added'
-        else:
-            self.message = 'This function is not currently allowed! Please contact the dev team to have it added'
+import csv
+import re
+import exceptions
 
 def wrap_wolf(s):
-    if s == "bad":
-        raise WhiteListError
-    wrapped f'Export["{img_path}", Style[{s}, Large], Background -> None, ImageResolution -> 100]'
-    return wrapped
+    with open('D:/dev/discordbots/WolfBot/cogs/whitelist.csv', 'r') as f:
+            reader = csv.reader(f)
+            whitelist = list(reader)[0]
+    with open('D:/dev/discordbots/WolfBot/cogs/blacklist.csv', 'r') as f:
+        reader = csv.reader(f)
+        blacklist = list(reader)[0]    
+
+
+    pattern = r"([A-Z]{1,2}[a-z]+'*)\[.*?"
+    functions = re.findall(pattern, s)
+
+    allow = True
+    for function in functions:
+        if function not in whitelist:
+            allow = False
+            raise exceptions.WhiteListError(function)
+            break
+    
+    for phrase in blacklist:
+        if phrase in s:
+            raise exceptions.BlackListError(phrase)
+        
+    return f'Export["{img_path}", Style[{s}, Large], Background -> None, ImageResolution -> 100]'
