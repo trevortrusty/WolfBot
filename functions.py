@@ -20,8 +20,8 @@ import exceptions
 
 def wrap_wolf(s):
     with open('D:/dev/discordbots/WolfBot/cogs/whitelist.csv', 'r') as f:
-            reader = csv.reader(f)
-            whitelist = list(reader)[0]
+        reader = csv.reader(f)
+        whitelist = list(reader)[0]
     with open('D:/dev/discordbots/WolfBot/cogs/blacklist.csv', 'r') as f:
         reader = csv.reader(f)
         blacklist = list(reader)[0]    
@@ -40,5 +40,7 @@ def wrap_wolf(s):
     for phrase in blacklist:
         if phrase in s:
             raise exceptions.BlackListError(phrase)
-        
-    return f'Export["{img_path}", Style[{s}, Large], Background -> None, ImageResolution -> 100]'
+            break
+
+    return f'Export["{img_path}", Style[{s}, Large], Background -> None]'
+    #, ImageResolution -> 100
