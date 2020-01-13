@@ -13,7 +13,7 @@ import PIL.ImageOps
 import asyncio
 import embeds
 # from  cogs.bark import session
-from paths import img_path, kernel_path, wl_path, bl_path
+from paths import file, img_path, kernel_path, wl_path, bl_path
 import csv
 import re
 import exceptions
@@ -42,5 +42,8 @@ def wrap_wolf(s):
             raise exceptions.BlackListError(phrase)
             break
 
-    return f'Export["{img_path}", Style[{s}, Large], Background -> None]'
+    if 'Animate' not in s:
+        return f'Export["{img_path}", Style[{s}, Large], Background -> None]'
+    else:
+        return f'Export["{file}/output/output.gif", {s}]'
     #, ImageResolution -> 100

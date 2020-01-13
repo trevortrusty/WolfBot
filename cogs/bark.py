@@ -13,7 +13,7 @@ import PIL.ImageOps
 import asyncio
 import embeds
 
-from paths import img_path, kernel_path
+from paths import img_path, kernel_path, file
 import re
 import csv
 from functions import wrap_wolf
@@ -75,12 +75,18 @@ class Bark(commands.Cog):
                     else:
                         log = embeds.createEmbed(log)
                         ##################enlarge()
-                        await ctx.send(file=discord.File(img_path))
+                        if 'Animate' not in script:
+                            await ctx.send(file=discord.File(img_path))
+                        else:
+                            await ctx.send(file=discord.File(f'{file}/output/output.gif'))
                         await ctx.send(embed = log) 
                 else:
                     # No errors, continue
                     # Send image from Wolfram calculation results
-                    await ctx.send(file=discord.File(img_path))
+                    if 'Animate' not in script:
+                        await ctx.send(file=discord.File(img_path))
+                    else:
+                        await ctx.send(file=discord.File(f'{file}/output/output.gif'))
 
             except exceptions.WhiteListError as error:
                 await ctx.send(error.message)
