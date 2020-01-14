@@ -34,11 +34,6 @@ class Alpha(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-
-    # Events
-
-    
-    #### Commands ####
         
     @commands.command()
     # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
@@ -58,27 +53,7 @@ class Alpha(commands.Cog):
                 eval = await asyncio.wait_for(session.evaluate(png_export), 40)
                 enlarge()
                 await ctx.send(file=discord.File(img_path))
-                # Check for errors before sending result
-                # log = str(eval.messages)
-
-                # if log != 'None':
-                #     if(len(log) > 256):
-                #         await ctx.send(embed = embeds.general_error)
-                #     elif (log).startswith('(\'Invalid syntax'):
-                #         await ctx.send(embed = embeds.syntax_error)
-                #     elif log.startswith('(\'Not enough memory available to rasterize Notebook expression.\',)'):
-                #         await ctx.send(embed = embeds.memory_error)
-                #         await ctx.send(f'```{await session.evaluate_wrap(wlexpr(query), timeout = 5)}```')
-                #     else:
-                #         log = embeds.createEmbed(log)
-                #         # enlarge()
-                #         await ctx.send(file=discord.File(img_path))
-                #         await ctx.send(embed = log) 
-                # else:
-                #     # No errors, continue
-                #     # enlarge()
-                #     # Send image from Wolfram calculation results
-                #     await ctx.send(file=discord.File(img_path))
+                
             except Exception:
                 await ctx.send(embed = embeds.time_error)
 
