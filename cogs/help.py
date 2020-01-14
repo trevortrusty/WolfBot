@@ -61,6 +61,7 @@ class Help(commands.Cog):
         async with ctx.typing():
             embed = discord.Embed(
                 title = 'Click to see Wolfram\'s license and conditions which we operate under.',
+                url = 'https://github.com/trevortrusty/WolfBot/blob/master/LICENSE'
                 description = 'MIT License\nCopyright (c) 2018 Wolfram Research Inc.'
             )
             embed.set_footer(text='Wolfram Client Library for Python')
