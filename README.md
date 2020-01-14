@@ -1,2 +1,2 @@
 # WolfBot
-<p>Description goes here</p>
+Description goes here
