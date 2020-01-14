@@ -56,7 +56,16 @@ class Help(commands.Cog):
                 )
                 embed.set_footer(text = f'requested by {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
                 await ctx.send(embed = embed)
-
+    @commands.command()
+    async def license(self, ctx):
+        async with ctx.typing():
+            embed = discord.Embed(
+                title = 'Click to see Wolfram\'s license and conditions which we operate under.',
+                description = 'MIT License\nCopyright (c) 2018 Wolfram Research Inc.'
+            )
+            embed.set_footer(text='Wolfram Client Library for Python')
+            await ctx.send(embed = embed)
+        #https://github.com/trevortrusty/WolfBot/blob/master/LICENSE
 
 def setup(client):
     client.add_cog(Help(client))
