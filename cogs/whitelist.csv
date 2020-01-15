@@ -1,1 +1,1 @@
-Sin,Cos,Tan,Plot,Plot3D,Integrate,NIntegrate,Range,Array,SparseArray,Sqrt,Sum,ReplaceAll,Power,Hold,FullForm,Animate
+Sin,Cos,Tan,Plot,Plot3D,Integrate,NIntegrate,Range,Array,SparseArray,Sqrt,Sum,ReplaceAll,Power,Hold,FullForm,Animate,Re,Im,Solve,FindRoot,NSolve, NDSolve, DSolve,Exp,SparseArray
