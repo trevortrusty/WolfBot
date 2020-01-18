@@ -11,7 +11,7 @@ My four current discord commands are
 
 
 ## Using WolfBot
-__**Bark Command**__
+**__Bark Command__**
 - Plot the graph of `E^x` from 0 to 5:
 ```
 $bark Plot[E^x, {x, 0, 5}]
