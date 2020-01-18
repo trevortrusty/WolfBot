@@ -1,7 +1,7 @@
 # WolfBot
 I'm a discord bot that runs Mathematica/Wolfram code and sends you the result quickly!
 
-> Currently, we are not releasing the bot invitation here yet while we are still in development, but to learn more or use WolfBot, head over to our server: [WolfBot Discord Server](discord.gg/eyd376A)
+> Currently, we are not releasing the bot invitation here yet while we are still in development, but to learn more or use WolfBot, head over to our server: [WolfBot Discord Server](https://discord.gg/eyd376A)
 
 My four current discord commands are
 - bark (***Takes in Wolfram code from you to be evaluated***)
