@@ -21,3 +21,6 @@ $bark Plot[E^x, {x, 0, 5}]
  $bark f = Sin(x);
 Plot[f, {x, -Pi, Pi}]
 ```
+
+### Download our manual:
+| (https://github.com/trevortrusty/WolfBot/raw/master/docs/man.pdf)[Download] |
