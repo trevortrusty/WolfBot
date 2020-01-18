@@ -10,13 +10,15 @@ My four current discord commands are
 - docs (***Searches the Wolfram Language Documentation for you***)
 
 ## Using WolfBot
+  WolfBot relies on the Wolfram programming language and its syntax for input.
+  
 __**Bark Command**__
 - Plot the graph of `E^x` from 0 to 5:
 ```
 $bark Plot[E^x, {x, 0, 5}]
 ```
-- Define a function `sin(x)`, then graph the function from -π to π:
+- Define a function `Sin[x]`, then graph the function from -π to π:
  ```
- $bark f = Sin(x);
+ $bark f = Sin[x];
 Plot[f, {x, -Pi, Pi}]
 ```
