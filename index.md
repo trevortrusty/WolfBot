@@ -11,10 +11,10 @@ My four current discord commands are
 
 
 My four current discord commands are
-- bark | ***Takes in Wolfram code from you to be evaluated***
+- bark  | ***Takes in Wolfram code from you to be evaluated***
 - alpha | ***Mathematica tool that queries Wolfram\|Alpha. | It doesn't do everything that Wolfram\|Alpha can do, it's a very minimal feature of WolfBot***)
-- help | ***Sends a message regarding the bot info, and the commands listed here with their syntax***
-- docs | ***Searches the Wolfram Language Documentation for you***
+- help  | ***Sends a message regarding the bot info, and the commands listed here with their syntax***
+- docs  | ***Searches the Wolfram Language Documentation for you***
 
 
 ## Using WolfBot
