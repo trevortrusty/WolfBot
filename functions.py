@@ -43,7 +43,7 @@ def wrap_wolf(s):
             break
 
     if 'Animate' not in s:
-        return f'Export["{img_path}", Style[{s}, Large], Background -> None]'
+        return f'Export["{img_path}", Style[{s}, Large], Background -> None, FontFamily -> "Times"]'
     else:
         return f'Export["{file}/output/output.gif", {s}]'
     #, ImageResolution -> 100
