@@ -46,21 +46,21 @@ class Alpha(commands.Cog):
 
             try:
                 '''old method'''
-                # # Evaluate given expression, exporting result as png
-                # # eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
-                # graphic = wl.WolframAlpha(query, "Result")
-                # png_export = wl.Export(img_path, graphic, "PNG")
+                # Evaluate given expression, exporting result as png
+                # eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
+                graphic = wl.WolframAlpha(query, "FullOutput")
+                png_export = wl.Export(img_path, graphic, "PNG")
                 
-                # eval = await asyncio.wait_for(session.evaluate(png_export), 40)
-                # enlarge()
-                # await ctx.send(file=discord.File(img_path))
+                eval = await asyncio.wait_for(session.evaluate(png_export), 40)
+                enlarge()
+                await ctx.send(file=discord.File(img_path))
                 '''new method'''
-                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "Image"]]'
-                await asyncio.wait_for(session.evaluate(send), 10)
+                # send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "Image"]]'
+                # await asyncio.wait_for(session.evaluate(send), 10)
             except Exception:
                 await ctx.send(embed = embeds.time_error)
 
-            await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
+            # await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
 
