@@ -13,7 +13,7 @@ import PIL.ImageOps
 import asyncio
 import embeds
 from  cogs.bark import session
-from paths import img_path, kernel_path
+from paths import img_path, kernel_path, file
 
 
 #Enlarges image output from Wolfram calculation, and then saves as png #
@@ -55,12 +55,12 @@ class Alpha(commands.Cog):
                 # enlarge()
                 # await ctx.send(file=discord.File(img_path))
                 '''new method'''
-                send = f'Export["{img_path}", WolframAlpha["{query}"]]'
+                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}"]]'
                 await asyncio.wait_for(session.evaluate(send), 10)
             except Exception:
                 await ctx.send(embed = embeds.time_error)
 
-            await ctx.send(file=discord.File(img_path))
+            await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
 
