@@ -60,6 +60,7 @@ class Alpha(commands.Cog):
             except Exception:
                 await ctx.send(embed = embeds.time_error)
 
+            await ctx.send(file=discord.File(img_path))
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
 
