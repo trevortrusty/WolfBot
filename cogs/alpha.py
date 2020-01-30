@@ -55,7 +55,7 @@ class Alpha(commands.Cog):
                 # enlarge()
                 # await ctx.send(file=discord.File(img_path))
                 '''new method'''
-                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}"]]'
+                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "Image"]]'
                 await asyncio.wait_for(session.evaluate(send), 10)
             except Exception:
                 await ctx.send(embed = embeds.time_error)
