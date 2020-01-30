@@ -40,20 +40,23 @@ class Alpha(commands.Cog):
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            begin = f'Export["{img_path}", Style['
-            end = ', Large]]'
-            export = begin + query + end
+            # begin = f'Export["{img_path}", Style['
+            # end = ', Large]]'
+            # export = begin + query + end
 
             try:
-                # Evaluate given expression, exporting result as png
-                # eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
-                graphic = wl.WolframAlpha(query, "Result")
-                png_export = wl.Export(img_path, graphic, "PNG")
+                '''old method'''
+                # # Evaluate given expression, exporting result as png
+                # # eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
+                # graphic = wl.WolframAlpha(query, "Result")
+                # png_export = wl.Export(img_path, graphic, "PNG")
                 
-                eval = await asyncio.wait_for(session.evaluate(png_export), 40)
-                enlarge()
-                await ctx.send(file=discord.File(img_path))
-                
+                # eval = await asyncio.wait_for(session.evaluate(png_export), 40)
+                # enlarge()
+                # await ctx.send(file=discord.File(img_path))
+                '''new method'''
+                send = f'Export["{img_path}", WolframAlpha[{query}]]'
+                await asyncio.wait_for(session.evaluate(send), 10)
             except Exception:
                 await ctx.send(embed = embeds.time_error)
 
