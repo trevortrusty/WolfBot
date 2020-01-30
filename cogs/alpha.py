@@ -52,7 +52,7 @@ class Alpha(commands.Cog):
                 png_export = wl.Export(img_path, graphic, "PNG")
                 
                 eval = await asyncio.wait_for(session.evaluate(png_export), 40)
-                enlarge()
+                # enlarge()
                 await ctx.send(file=discord.File(img_path))
                 '''new method'''
                 # send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "Image"]]'
