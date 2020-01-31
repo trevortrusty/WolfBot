@@ -59,9 +59,10 @@ class Alpha(commands.Cog):
                 # WolframAlpha["Sin[t]",TimeConstraint -> {E, .30, .30, .30}, Asynchronous -> All, AppearanceElements ->{"Pods"}]
                 await asyncio.wait_for(session.evaluate(send), 40)
                 await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
-            except Exception:
+            except asyncio.TimeoutError:
                 await ctx.send(embed = embeds.time_error)
-
+            except Exception as err:
+                await ctx.send(f'Error: {err}')
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
 
