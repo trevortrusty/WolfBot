@@ -7,7 +7,7 @@ from discord.ext import commands, tasks
 import BotToken
 from paths import cogs_path
 
-client = commands.Bot(command_prefix = '$')
+client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
 
 @client.command()

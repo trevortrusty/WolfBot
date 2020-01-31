@@ -35,7 +35,7 @@ class Alpha(commands.Cog):
     def __init__(self, client):
         self.client = client
         
-    @commands.command()
+    @commands.command(aliases = ['fetch', 'awoo', 'beg', 'wa', 'WA'])
     # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team')
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 

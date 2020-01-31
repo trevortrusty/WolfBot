@@ -27,7 +27,7 @@ class Bark(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
+    @commands.command(aliases = ['w', 'wl', 'WL', 'run', 'woof', 'howl'])
     # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team', 'testing')
     async def bark(self, ctx,*, script):
         async with ctx.typing():
