@@ -40,7 +40,7 @@ class Alpha(commands.Cog):
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            if not query.startswith('-list '):
+            if not '-link ' in query:
                 try:
                     '''new method'''
                     send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "FullOutput", TimeConstraint -> ' + '{E, .30, .30, .30}, Asynchronous -> All, AppearanceElements -> {"Pods"}]]'
@@ -52,9 +52,11 @@ class Alpha(commands.Cog):
                 except Exception as err:
                     await ctx.send(f'Error: {err}')
             else:
-                q = str(query)
-                q = q.replace('-list ', '')
-                send = f'https://www.wolframalpha.com/input/?i=integrate {q}'
+                q = query
+                q = q.replace('-link', '')
+                q = q.strip()
+                q.replace(' ', '+')
+                send = f'https://www.wolframalpha.com/input/?i={q}'
                 link = discord.Embed(
                     title = 'Click for Wolfram Online Result',
                     url = send
