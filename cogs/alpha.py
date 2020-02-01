@@ -40,7 +40,7 @@ class Alpha(commands.Cog):
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            if not (string)query.startswith('-list '):
+            if not query.startswith('-list '):
                 try:
                     '''new method'''
                     send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "FullOutput", TimeConstraint -> ' + '{E, .30, .30, .30}, Asynchronous -> All, AppearanceElements -> {"Pods"}]]'
