@@ -40,32 +40,30 @@ class Alpha(commands.Cog):
     async def alpha(self, ctx,*, query):
         # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
         async with ctx.typing():
-            # begin = f'Export["{img_path}", Style['
-            # end = ', Large]]'
-            # export = begin + query + end
-
-            try:
-                '''old method'''
-                # # Evaluate given expression, exporting result as png
-                # # eval = await asyncio.wait_for(session.evaluate_wrap(wlexpr(export)), 40)
-                # graphic = wl.WolframAlpha(query, "FullOutput")
-                # png_export = wl.Export(img_path, graphic, "PNG")
-                
-                # eval = await asyncio.wait_for(session.evaluate(png_export), 40)
-                # # enlarge()
-                # await ctx.send(file=discord.File(img_path))
-                '''new method'''
-                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "FullOutput", TimeConstraint -> ' + '{E, .30, .30, .30}, Asynchronous -> All, AppearanceElements -> {"Pods"}]]'
-                # WolframAlpha["Sin[t]",TimeConstraint -> {E, .30, .30, .30}, Asynchronous -> All, AppearanceElements ->{"Pods"}]
-                await asyncio.wait_for(session.evaluate(send), 40)
-                await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
-            except asyncio.TimeoutError:
-                await ctx.send(embed = embeds.time_error)
-            except Exception as err:
-                await ctx.send(f'Error: {err}')
+            if not (string)query.startswith('-list '):
+                try:
+                    '''new method'''
+                    send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "FullOutput", TimeConstraint -> ' + '{E, .30, .30, .30}, Asynchronous -> All, AppearanceElements -> {"Pods"}]]'
+                    
+                    await asyncio.wait_for(session.evaluate(send), 40)
+                    await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
+                except asyncio.TimeoutError:
+                    await ctx.send(embed = embeds.time_error)
+                except Exception as err:
+                    await ctx.send(f'Error: {err}')
+            else:
+                q = str(query)
+                q = q.replace('-list ', '')
+                send = f'https://www.wolframalpha.com/input/?i=integrate {q}'
+                link = discord.Embed(
+                    title = 'Click for Wolfram Online Result',
+                    url = send
+                )
+                await ctx.send(embed = link)
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
-
+                
+                
 
 def setup(client):
     client.add_cog(Alpha(client))
