@@ -24,6 +24,7 @@ My four current discord commands are
  .bark f[t_] = Sin[t]; 
 Plot[f[x], {x, -Pi, Pi}]
 ```
+
 ***Alpha Command***
 - Query Wolfram|Alpha
  ```
