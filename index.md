@@ -25,7 +25,7 @@ My four current discord commands are
 Plot[f[x], {x, -Pi, Pi}]
 ```
 ***Alpha Command***
-- Query Wolfram Alpha
+- Query Wolfram|Alpha
  ```
  .alpha Hello, how are you?
  ```
