@@ -26,7 +26,9 @@ Plot[f[x], {x, -Pi, Pi}]
 ```
 **Alpha Command**
 - Query Wolfram Alpha
- ```.alpha Hello, how are you?```
+ ```
+ .alpha Hello, how are you?
+ ```
 
 ### Download our manual:
 [Download](https://github.com/trevortrusty/WolfBot/raw/master/docs/man.pdf)|
