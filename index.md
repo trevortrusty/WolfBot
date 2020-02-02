@@ -31,4 +31,4 @@ Plot[f[x], {x, -Pi, Pi}]
  ```
 
 ### Download our manual:
-[Download](https://github.com/trevortrusty/WolfBot/raw/master/docs/man.pdf)|
+[Download](https://github.com/trevortrusty/WolfBot/raw/master/docs/man.pdf)
