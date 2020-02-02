@@ -19,11 +19,14 @@ My four current discord commands are
 ```
 .bark Plot[E^x, {x, 0, 5}]
 ```
-- Define a function `sin(x)`, then graph the function from -π to π:
+- Define a function `Sin[t]`, then graph the function from -π to π:
  ```
- .bark f = Sin(x);
-Plot[f, {x, -Pi, Pi}]
+ .bark f[t_] = Sin[t]; 
+Plot[f[x], {x, -Pi, Pi}]
 ```
+**Alpha Command**
+- Query Wolfram Alpha
+ ```.alpha Hello, how are you?```
 
 ### Download our manual:
 [Download](https://github.com/trevortrusty/WolfBot/raw/master/docs/man.pdf)|
