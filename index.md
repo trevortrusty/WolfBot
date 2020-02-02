@@ -14,7 +14,7 @@ My four current discord commands are
 
 
 ## Using WolfBot
-**Bark Command**
+***Bark Command***
 - Plot the graph of `E^x` from 0 to 5:
 ```
 .bark Plot[E^x, {x, 0, 5}]
@@ -24,7 +24,7 @@ My four current discord commands are
  .bark f[t_] = Sin[t]; 
 Plot[f[x], {x, -Pi, Pi}]
 ```
-**Alpha Command**
+***Alpha Command***
 - Query Wolfram Alpha
  ```
  .alpha Hello, how are you?
