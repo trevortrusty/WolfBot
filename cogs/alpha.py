@@ -43,7 +43,7 @@ class Alpha(commands.Cog):
             if not '-link ' in query:
                 try:
                     '''new method'''
-                    send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", "FullOutput", TimeConstraint -> ' + '{E, .30, .30, .30}, Asynchronous -> All, AppearanceElements -> {"Pods"}]]'
+                    send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", ' + '"FullOutput", Asynchronous -> All, AppearanceElements -> {"Pods"}, IncludePods -> {"Input", "Result", "BasicInformation:PeopleData", "Image:PeopleData", "IndefiniteIntegral", "Plot", "DefiniteIntegral", "VisualRepresentationOfTheIntegral", "PartialSums"}]]'
                     
                     await asyncio.wait_for(session.evaluate(send), 40)
                     await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
