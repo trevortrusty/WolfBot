@@ -16,5 +16,5 @@ class Fun(commands.Cog):
     async def say(self, ctx, *, message):
         await ctx.send(message)
 
-def Fun(client):
-    client.add_cog(Ping(client))
+def setup(client):
+    client.add_cog(Fun(client))
