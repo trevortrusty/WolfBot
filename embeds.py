@@ -22,6 +22,13 @@ general_error = discord.Embed(
     title = 'Errors were detected during computation'
 )
 
+# General errors in computation
+alpha_error = discord.Embed(
+    title = 'WOOF! Wolfram Alpha is having trouble parsing thy query!',
+    description = 'Try rewording?',
+    color = discord.Color.blue()
+)
+
 # Not enough memory
 memory_error = discord.Embed(
     title = 'Not enough memory available to rasterize Notebook expression.'

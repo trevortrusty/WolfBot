@@ -13,3 +13,6 @@ class BlackListError(Exception):
             self.message = f'\'{bad}\' is a banned keyword/function for WolfBot. Contact the dev team at https://discord.gg/eyd376A if you think this is a mistake'
         else:
             self.message = 'You\ve typed a banned phrase, so we cannot evaluate this code right now!'
+
+class BadQuery(Exception):
+    pass

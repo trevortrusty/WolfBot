@@ -62,15 +62,18 @@ async def enlarge(ctx):
 async def crop():
     img = Image.open(f'{file}/output/alpha.jpg', 'r')
     img_w, img_h = img.size
+    if img_w < 100:
+        raise exceptions.BadQuery
+    else:
+        # Setting the points for cropped image 
+        left = 0
+        top = 0
+        # right = img_w - 440
+        right = img_w / 1.77
+        bottom = img_h
+        
+        # Cropped image of above dimension 
+        # (It will not change orginal image) 
+        final = img.crop((left, top, right, bottom))
 
-    # Setting the points for cropped image 
-    left = 0
-    top = 0
-    right = img_w - 440
-    bottom = img_h
-    
-    # Cropped image of above dimension 
-    # (It will not change orginal image) 
-    final = img.crop((left, top, right, bottom))
-
-    final.save(f'{file}/output/alpha.jpg')
+        final.save(f'{file}/output/alpha.jpg')
