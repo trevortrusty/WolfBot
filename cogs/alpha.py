@@ -14,7 +14,7 @@ import asyncio
 import embeds
 from  cogs.bark import session
 from paths import img_path, kernel_path, file
-
+from functions import crop
 
 #Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
@@ -46,6 +46,7 @@ class Alpha(commands.Cog):
                     send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", ' + '"FullOutput", Asynchronous -> All, AppearanceElements -> {"Pods"}, IncludePods -> {"Input", "Result", "BasicInformation:PeopleData", "Image:PeopleData", "IndefiniteIntegral", "Plot", "DefiniteIntegral", "VisualRepresentationOfTheIntegral", "PartialSums"}]]'
                     
                     await asyncio.wait_for(session.evaluate(send), 40)
+                    await crop()
                     await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
                 except asyncio.TimeoutError:
                     await ctx.send(embed = embeds.time_error)

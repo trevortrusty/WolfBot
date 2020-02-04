@@ -47,3 +47,30 @@ def wrap_wolf(s):
     else:
         return f'Export["{file}/output/output.gif", {s}]'
     #, ImageResolution -> 100
+
+# Enlarges image output from Wolfram calculation, and then saves as png #
+async def enlarge(ctx):
+    img = Image.open(img_path, 'r')
+    img_w, img_h = img.size
+
+    background = Image.new('RGB', (img_w + 25, img_h + 25), (255, 255, 255, 255))
+    bg_w, bg_h = background.size
+    background.paste(img,(13,12))
+    final = PIL.ImageOps.invert(background)
+    final.save(img_path)
+
+async def crop():
+    img = Image.open(f'{file}/output/alpha.jpg', 'r')
+    img_w, img_h = img.size
+
+    # Setting the points for cropped image 
+    left = 0
+    top = 0
+    right = img_w - 440
+    bottom = img_h
+    
+    # Cropped image of above dimension 
+    # (It will not change orginal image) 
+    final = img.crop((left, top, right, bottom))
+
+    final.save(f'{file}/output/alpha.jpg')
