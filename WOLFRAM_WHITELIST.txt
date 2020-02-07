@@ -1,0 +1,17 @@
+If[Length[Flatten[List[DeleteMissing[DeleteDuplicates[
+        Evaluate[Map[Head,
+            Level[Hold[REPLACE], {0, Infinity}]]
+           /. 
+           Table[WHITELIST[[i]] -> Missing[], {i, 1, 
+             Length[WHITELIST]}]] /. Missing[][u__] -> {u}]]]]] > 0,
+  
+  "Grrr, banned function(s)! " <> 
+   ToString[
+    DeleteMissing[
+     DeleteDuplicates[
+      Evaluate[Map[Head, Level[Hold[REPLACE], {0, Infinity}]]] /.
+        Table[
+         WHITELIST[[k]] -> Missing[], {k, 1, Length[WHITELIST]}] /. 
+       Missing[][u__] -> {u}
+      ]]],
+  REPLACE];
