@@ -31,6 +31,7 @@ class Bark(commands.Cog):
     # @commands.has_any_role('Admin', 'Bot Henchmen', 'Development Team', 'testing')
     async def bark(self, ctx,*, script):
         async with ctx.typing():
+            script = script.replace('```', '')
             try:
                 export = wrap_wolf(script)
 
@@ -42,8 +43,8 @@ class Bark(commands.Cog):
 
                 # Remove any (' and ') from error messages
                 if  '(\'' in log and ('\')' in log or '\',)' in log):
-                    log.replace('(\'', '')
-                    log.replace('\')', '')
+                    log = log.replace('(\'', '')
+                    log = log.replace('\')', '')
 
                 # Determine output when there's a wolfram error
                 if log != 'None':
