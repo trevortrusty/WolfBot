@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+# Bot entry point
 import discord
 import os
 from discord.ext import commands, tasks
