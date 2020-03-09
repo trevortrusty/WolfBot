@@ -12,7 +12,7 @@ from PIL import Image
 import PIL.ImageOps 
 import asyncio
 import embeds
-from  cogs.bark import session
+from cogs.bark import session
 from paths import img_path, kernel_path, file
 from functions import crop
 import exceptions
