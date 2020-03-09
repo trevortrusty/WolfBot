@@ -14,4 +14,4 @@ If[Length[Flatten[List[DeleteMissing[DeleteDuplicates[
          WHITELIST[[k]] -> Missing[], {k, 1, Length[WHITELIST]}] /. 
        Missing[][u__] -> {u}
       ]]],
-  REPLACE];
+  REPLACE]
