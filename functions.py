@@ -17,7 +17,6 @@ from paths import file, img_path, kernel_path, wl_path, bl_path
 import csv
 import re
 import exceptions
-import string
 
 def wrap_wolf(s):
     with open(wl_path, 'r') as f:
@@ -29,11 +28,11 @@ def wrap_wolf(s):
 
 
     pattern = r"([A-Z]{1,2}[a-z]+'*)\[.*?"
-    functions = re.findall(pattern, string.capwords(s))
+    functions = re.findall(pattern, s)
 
     allow = True
     for function in functions:
-        if function not in string.capwords(str(whitelist)):
+        if function not in whitelist:
             allow = False
             raise exceptions.WhiteListError(function)
             break

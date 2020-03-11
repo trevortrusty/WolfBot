@@ -41,7 +41,7 @@ time_error = discord.Embed(
 
 # Tail message
 tail_message = discord.Embed(
-    title = f'**Learn more about the Wolfram Language**',
+    title = f'**Learn more the about Wolfram Language**',
     color = discord.Color.blue(),
     #description = f'Requested by\n{ctx.message.author.mention}',
     url = 'https://reference.wolfram.com/language/'
