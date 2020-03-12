@@ -29,11 +29,20 @@ def wrap_wolf(s):
 
 
     pattern = r"([A-Z]{1,2}[a-z]+'*)\[.*?"
-    functions = re.findall(pattern, string.capwords(s))
+    # functions = re.findall(pattern, string.capwords(s))
+    # # functions = re.findall(pattern, s.upper())
+    # allow = True
+    # for function in functions:
+    #     if function not in string.capwords(str(whitelist)):
+    #     # if function not in (str(whitelist)).upper():
+    #         allow = False
+    #         raise exceptions.WhiteListError(function.upper())
+    #         break
+    functions = re.findall(pattern, s)
 
     allow = True
     for function in functions:
-        if function not in string.capwords(str(whitelist)):
+        if function not in whitelist:
             allow = False
             raise exceptions.WhiteListError(function)
             break
