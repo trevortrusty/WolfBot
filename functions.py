@@ -28,6 +28,7 @@ def wrap_wolf(s):
 
 
     pattern = r"([A-Z]{1,2}[a-z]+'*)\[.*?"
+
     functions = re.findall(pattern, s)
 
     allow = True
