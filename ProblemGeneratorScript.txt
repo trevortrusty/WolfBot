@@ -1,256 +1,281 @@
 Prob[name_] :=
  (Clear[t, x, y, z, x1, x2, x3, x4, x5];
-  Block[{ALGEBRA = 4, TRIGONOMETRY = 3, PRECALCULUS = 3, CALCULUS = 5,
-     LINEAR = 4, COMPLEX = 4},
+  
+  
+  
+  Block[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, LINEAR , 
+    COMPLEX, Name, Number},
    
-   <|
-      
-      algebra1 :> 
-       Column[{"Solve for x.", 
-         Block[{a, b, c, d}, 
-          Equal[Expand[a (x - b) (x - c) + d], 
-            d] /. {a -> (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1,
-                 5}],
-            b -> (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 10}],
-            c -> RandomInteger[{-10, 10}],
-            d -> RandomInteger[{-25, 25}]}]}],
-      algebra2 :> 
-       Column[{"Solve for x.", 
-         Block[{a, b, c}, 
-          Equal[a x + c, 
-            b a + c] /. {a -> (-1)^(RandomInteger[{1, 
-                  0}]) RandomInteger[{1, 10}],
-            b -> RandomInteger[{-10, 10}],
-            c -> RandomInteger[{-20, 20}]}]}],
-      algebra3 :> 
-       Column[{"Solve for x.", 
-         Block[{a, b, c, d}, 
-          Equal[Expand[a x (x - b) (x - c) + d], 
-            d] /. {a -> (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1,
-                 5}],
-            b -> (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 15}],
-            c -> RandomInteger[{-20, 20}],
-            d -> RandomInteger[{-20, 20}]}]}],
-      algebra4 :> 
-       Column[{"Solve for x and y.", 
-         Block[{a, b, c, d, e, f}, {a = RandomInteger[{-10, 10}],
-           b = RandomInteger[{-10, 10}],
-           c = RandomInteger[{-10, 10}],
-           d = RandomInteger[{-10, 10}],
-           e = RandomInteger[{-10, 10}],
-           f = RandomInteger[{-10, 10}]}; 
-          If[a d == b c, a = a + 1, a = a]; 
-          Column[{Equal[{c, d}.{x, y}, {a, b}.{c, d}], 
-            Equal[{e, f}.{x, y}, {a, b}.{e, f}]}]]}],
-      
-      
-      trigonometry1 :> 
-       Column[{"Solve for the angle x.", 
-        Block[{a, b, c, fun}, 
-         Equal[(-1)^RandomInteger[{0, 1}] (Abs[a] + Abs[b] + .1) fun[
-              x] + c, 
-           a + c] /. {a -> 
-            RandomReal[{-50, 50}, WorkingPrecision -> 4],
-           b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-           c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Sin, Cos}[[RandomInteger[{1, 2}]]]}]}],
-      trigonometry2 :> 
-       Column[{"Solve for the angle x.", 
-        Block[{a, b, c, fun}, 
-         Equal[a fun[x] + c, 
-           c + (-1)^
-              RandomInteger[{0, 1}] (Abs[b] + 
-               Abs[a])] /. {a -> (-1)^(RandomInteger[{0, 
-                 1}]) RandomReal[{1, 100}, WorkingPrecision -> 4],
-           b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-           c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Sec, Csc}[[RandomInteger[{1, 2}]]]}]}],
-      trigonometry3 :> 
-       Column[{"Solve for the angle x.", 
-        Block[{a, b, c, fun}, 
-         Equal[a fun[x] + c, 
-           b + c] /. {a -> (-1)^(RandomInteger[{0, 1}]) RandomReal[{1,
-                50}, WorkingPrecision -> 4],
-           b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-           c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Tan, Cot}[[RandomInteger[{1, 2}]]]}]}],
-      
-      
-      precalculus1 :> Column[{"Solve for \!\(\*
+   If[Length[
+      Position[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, LINEAR ,
+         COMPLEX}, 
+       ToExpression[
+        ToUpperCase[
+         ToString[
+          ToExpression[
+            ToLowerCase[ToString[name]]] /. {alg -> algebra, 
+            tri -> trigonometry, pre -> precalculus, cal -> calculus, 
+            lin -> linear, com -> complex}]]]]] == 1,
+    
+    Name = 
+     ToString[
+      ToExpression[ToLowerCase[ToString[name]]] /. {alg -> algebra, 
+        tri -> trigonometry, pre -> precalculus, cal -> calculus, 
+        lin -> linear, com -> complex}]; ALGEBRA = 4; 
+    TRIGONOMETRY = 3; PRECALCULUS = 3; CALCULUS = 5; LINEAR = 4; 
+    COMPLEX = 4; 
+    Number = 
+     ToString[
+      RandomInteger[{1, 
+        ToExpression[
+         ToUpperCase[
+          ToString[
+           ToExpression[
+             ToLowerCase[ToString[name]]] /. {alg -> algebra, 
+             tri -> trigonometry, pre -> precalculus, cal -> calculus,
+              lin -> linear, com -> complex}]]]}]];
+    
+    <|
+       
+       algebra1 :> 
+        Column[{"Solve for x.", 
+          Block[{a, b, c, d}, 
+           Equal[Expand[a (x - b) (x - c) + d], 
+             d] /. {a -> (-1)^(RandomInteger[{1, 
+                   0}]) RandomInteger[{1, 5}],
+             b -> (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 10}],
+             c -> RandomInteger[{-10, 10}],
+             d -> RandomInteger[{-25, 25}]}]}],
+       algebra2 :> 
+        Column[{"Solve for x.", 
+          Block[{a, b, c}, 
+           Equal[a x + c, 
+             b a + c] /. {a -> (-1)^(RandomInteger[{1, 
+                   0}]) RandomInteger[{1, 10}],
+             b -> RandomInteger[{-10, 10}],
+             c -> RandomInteger[{-20, 20}]}]}],
+       algebra3 :> 
+        Column[{"Solve for x.", 
+          Block[{a, b, c, d}, 
+           Equal[Expand[a x (x - b) (x - c) + d], 
+             d] /. {a -> (-1)^(RandomInteger[{1, 
+                   0}]) RandomInteger[{1, 5}],
+             b -> (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 15}],
+             c -> RandomInteger[{-20, 20}],
+             d -> RandomInteger[{-20, 20}]}]}],
+       algebra4 :> 
+        Column[{"Solve for x and y.", 
+          Block[{a, b, c, d, e, f}, {a = RandomInteger[{-10, 10}],
+            b = RandomInteger[{-10, 10}],
+            c = RandomInteger[{-10, 10}],
+            d = RandomInteger[{-10, 10}],
+            e = RandomInteger[{-10, 10}],
+            f = RandomInteger[{-10, 10}]}; 
+           If[a d == b c, a = a + 1, a = a]; 
+           Column[{Equal[{c, d}.{x, y}, {a, b}.{c, d}], 
+             Equal[{e, f}.{x, y}, {a, b}.{e, f}]}]]}],
+       
+       
+       trigonometry1 :> 
+        Column[{"Solve for the angle x.", 
+          Block[{a, b, c, fun}, 
+           Equal[(-1)^
+                RandomInteger[{0, 1}] (Abs[a] + Abs[b] + .1) fun[x] + 
+              c, a + c] /. {a -> 
+              RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
+             fun -> {Sin, Cos}[[RandomInteger[{1, 2}]]]}]}],
+       trigonometry2 :> 
+        Column[{"Solve for the angle x.", 
+          
+          Block[{a, b, c, fun}, 
+           Equal[a fun[x] + c, 
+             c + (-1)^
+                RandomInteger[{0, 1}] (Abs[b] + 
+                 Abs[a])] /. {a -> (-1)^(RandomInteger[{0, 
+                   1}]) RandomReal[{1, 100}, WorkingPrecision -> 4],
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
+             fun -> {Sec, Csc}[[RandomInteger[{1, 2}]]]}]}],
+       trigonometry3 :> 
+        Column[{"Solve for the angle x.", 
+          Block[{a, b, c, fun}, 
+           Equal[a fun[x] + c, 
+             b + c] /. {a -> (-1)^(RandomInteger[{0, 
+                   1}]) RandomReal[{1, 50}, WorkingPrecision -> 4],
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
+             fun -> {Tan, Cot}[[RandomInteger[{1, 2}]]]}]}],
+       
+       
+       precalculus1 :> Column[{"Solve for \!\(\*
 StyleBox[\"x\",\nFontSlant->\"Italic\"]\), \!\(\*
 StyleBox[\"y\",\nFontSlant->\"Italic\"]\), and \!\(\*
 StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
-          
-          matrix = 
-           Table[RandomInteger[{-15, 15}], {i, 1, 3}, {k, 1, 3}];
-          
-          Equal[Row[{MatrixForm[matrix], MatrixForm[{x, y, z}]}], 
-            MatrixForm[matrix.{a, b, c}]] /. {a -> 
-             RandomReal[{-25, 25}, WorkingPrecision -> 4],
-            b -> RandomReal[{-25, 25}, WorkingPrecision -> 4],
-            c -> RandomReal[{-25, 25}, WorkingPrecision -> 4]}]}],
-      precalculus2 :> 
-       Column[{"Solve for x.", 
-         Block[{a, b, c, d}, 
-          Equal[a x^2 + b x + c, 
-            d] /. {a -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-            c -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
-            d -> RandomReal[{-50, 50}, WorkingPrecision -> 4]}]}],
-      precalculus3 :> 
-       Column[{"Solve for x.", 
-         Block[{a, b, c}, 
-          Equal[a^c a^x, 
-            a^b] /. {a -> RandomReal[{1, 5}, WorkingPrecision -> 4],
-            b -> RandomReal[{-5, 5}],
-            c -> RandomReal[{-3, 3}]}]}],
-      
-      
-      calculus1 :> 
-        Column[{"Differentiate using product rule.", 
-          Block[{fun1, fun2, fun3}, 
-            Hold[D][TraditionalForm[fun1[x] fun2[x] fun3[x]], 
-             x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-            
-            fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt}[[RandomInteger[{1, 9}]]],
-            
-            fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt}[[RandomInteger[{1, 9}]]],
-            
-            fun3 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][u__] -> 
-         HoldForm[D[u]]},
-      calculus2 :> 
-        Column[{"Differentiate using chain rule.", 
-          Block[{fun1, fun2, fun3}, 
-            Hold[D][TraditionalForm[fun1[fun2[x]]], 
-             x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-            
-            fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt}[[RandomInteger[{1, 9}]]],
-            
-            fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][u__] -> 
-         HoldForm[D[u]]},
-      calculus3 :> 
-        Column[{"Differentiate using power rule.", 
-          Block[{fun1, a}, 
-            Hold[D][TraditionalForm[fun1[x]^a], 
-             x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-            
-            fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Sqrt, Function[u, u]}[[RandomInteger[{1, 10}]]],
-            
-            a -> (-1)^
-               RandomInteger[{0, 1}] RandomInteger[{1, 
-                20}]}}] /. {Hold[D][u__] -> HoldForm[D[u]]},
-      calculus4 :> 
-       Column[{"Evaluate the given integral.", 
-         Block[{a, b, c, d, e, f, x}, 
-          HoldForm[
-            Integrate[a x^5 + b x^4 + c x^3 + d x^2 + e x + f, 
-             x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-            a -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
-            b -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
-            c -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
-            d -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
-            e -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
-            f -> RandomReal[{-10, 10}, WorkingPrecision -> 4]}]}], 
-      calculus5 :> 
+           
+           matrix = 
+            Table[RandomInteger[{-15, 15}], {i, 1, 3}, {k, 1, 3}];
+           
+           Equal[Row[{MatrixForm[matrix], MatrixForm[{x, y, z}]}], 
+             MatrixForm[matrix.{a, b, c}]] /. {a -> 
+              RandomReal[{-25, 25}, WorkingPrecision -> 4],
+             b -> RandomReal[{-25, 25}, WorkingPrecision -> 4],
+             c -> RandomReal[{-25, 25}, WorkingPrecision -> 4]}]}],
+       precalculus2 :> 
+        Column[{"Solve for x.", 
+          Block[{a, b, c, d}, 
+           Equal[a x^2 + b x + c, 
+             d] /. {a -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             c -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
+             d -> RandomReal[{-50, 50}, WorkingPrecision -> 4]}]}],
+       precalculus3 :> 
+        Column[{"Solve for x.", 
+          Block[{a, b, c}, 
+           Equal[a^c a^x, 
+             a^b] /. {a -> RandomReal[{1, 5}, WorkingPrecision -> 4],
+             b -> RandomReal[{-5, 5}],
+             c -> RandomReal[{-3, 3}]}]}],
+       
+       
+       calculus1 :> 
+         Column[{"Differentiate using product rule.", 
+           Block[{fun1, fun2, fun3}, 
+             Hold[D][TraditionalForm[fun1[x] fun2[x] fun3[x]], 
+              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+             
+             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt}[[RandomInteger[{1, 9}]]],
+             
+             fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt}[[RandomInteger[{1, 9}]]],
+             
+             fun3 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
+           u__] -> HoldForm[D[u]]},
+       calculus2 :> 
+         Column[{"Differentiate using chain rule.", 
+           Block[{fun1, fun2, fun3}, 
+             Hold[D][TraditionalForm[fun1[fun2[x]]], 
+              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+             
+             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt}[[RandomInteger[{1, 9}]]],
+             
+             fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
+           u__] -> HoldForm[D[u]]},
+       calculus3 :> 
+         Column[{"Differentiate using power rule.", 
+           Block[{fun1, a}, 
+             Hold[D][TraditionalForm[fun1[x]^a], 
+              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+             
+             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Sqrt, Function[u, u]}[[RandomInteger[{1, 10}]]],
+             
+             a -> (-1)^
+                RandomInteger[{0, 1}] RandomInteger[{1, 
+                 20}]}}] /. {Hold[D][u__] -> HoldForm[D[u]]},
+       calculus4 :> 
         Column[{"Evaluate the given integral.", 
-          Block[{fun1, fun2, x}, 
-           Hold[Integrate][fun1[x] fun2[x], 
-             x] //. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-             
-             fun1 -> {Exp, Sin, Cos, 
-                Function[u, u^a]}[[RandomInteger[{1, 4}]]],
-             
-             fun2 -> {Exp, Sin, Cos, 
-                Function[u, u^a]}[[RandomInteger[{1, 4}]]],
-             a -> RandomInteger[{1, 5}]
-             }]}] /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]},
-      
-      
-      linear1 :> Column[{"Add the given matrices", Block[{a, b, c, d},
-          a = RandomInteger[{2, 4}];
-          b = RandomInteger[{2, 4}]; 
-          
-          Row[{c, Table[
-              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}], "+", 
-             d, Table[
-              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}]}] /.
-           {c -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}],
-            d -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}]}]}],
-      linear2 :> Column[{"Multiply the given matrices.", Block[{a, b},
-          a = RandomInteger[{2, 4}];
-          b = RandomInteger[{2, 4}]; 
-          Row[{Table[
-              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
-               b}]\[Transpose], 
-            Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}]}]]}],
-      linear3 :> Column[{"Solve for the vector.",
-         Block[{x1, x2, x3, x4, x5, n, matrix, vector},
-          n = RandomInteger[{2, 4}];
-          
-          matrix := Table[
-            RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}];
-          While[TrueQ[Det[matrix] == 0], matrix];
-          vector = {{x1}, {x2}, {x3}, {x4}, {x5}}[[1 ;; n]];
-          
-          Equal[Row[{matrix, vector}], 
-           matrix.Table[{RandomInteger[{-10, 10}]}, {i, 1, n}]]]}],
-      linear4 :> Column[{"Find the determinant.", Block[{a},
-          a = RandomInteger[{2, 4}]; 
-          Row[{Table[
-             RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}]}]]}],
-      
-      
-      complex1 :> 
-       Column[{"Find the resulting complex number.", 
-         Block[{a, b, c}, 
-          HoldForm[(a + I b)^c] /. {a -> 
-             RandomReal[{-2, 2}, WorkingPrecision -> 4], 
-            b -> RandomReal[{-2, 2}, WorkingPrecision -> 4], 
-            c -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]}]}],
-      complex2 :> 
-       Column[{"Find the magnitude and angle of the complex number.", 
-         Block[{a, b}, 
-          a + b I /. {a -> 
-             RandomReal[{-50, 50}, WorkingPrecision -> 4], 
-            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4]}]}],
-      complex3 :> 
-       Column[{"Multiply the following complex numbers.", 
-         Block[{a, b, c, d}, 
-          HoldForm[(a + b I) (c + d I)] /. {a -> 
-             RandomReal[{-2, 2}, WorkingPrecision -> 4], 
-            b -> RandomReal[{-2, 2}, WorkingPrecision -> 4], 
-            c -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4], 
-            d -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]}]}],
-      complex4 :> 
-       Block[{a, b, c, z, fun1}, 
-        Column[{"Solve for the complex value \!\(\*
+          Block[{a, b, c, d, e, f, x}, 
+           HoldForm[
+             Integrate[a x^5 + b x^4 + c x^3 + d x^2 + e x + f, 
+              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+             a -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
+             b -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
+             c -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
+             d -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
+             e -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
+             f -> RandomReal[{-10, 10}, WorkingPrecision -> 4]}]}], 
+       calculus5 :> 
+         Column[{"Evaluate the given integral.", 
+           Block[{fun1, fun2, x}, 
+            Hold[Integrate][fun1[x] fun2[x], 
+              x] //. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+              
+              fun1 -> {Exp, Sin, Cos, Function[u, u^a]}[[
+                RandomInteger[{1, 4}]]],
+              
+              fun2 -> {Exp, Sin, Cos, Function[u, u^a]}[[
+                RandomInteger[{1, 4}]]],
+              a -> RandomInteger[{1, 5}]
+              }]}] /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]},
+       
+       
+       linear1 :> Column[{"Add the given matrices", Block[{a, b, c, d},
+           a = RandomInteger[{2, 4}];
+           b = RandomInteger[{2, 4}]; 
+           Row[{c, 
+              Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}], 
+              "+", d, 
+              Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
+                b}]}] /.
+            {c -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}],
+             d -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}]}]}],
+       linear2 :> Column[{"Multiply the given matrices.", Block[{a, b},
+           a = RandomInteger[{2, 4}];
+           b = RandomInteger[{2, 4}]; 
+           Row[{Table[
+               RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
+                b}]\[Transpose], 
+             Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
+               b}]}]]}],
+       linear3 :> Column[{"Solve for the vector.",
+          Block[{x1, x2, x3, x4, x5, n, matrix, vector},
+           n = RandomInteger[{2, 4}];
+           
+           matrix := 
+            Table[RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}];
+           While[TrueQ[Det[matrix] == 0], matrix];
+           vector = {{x1}, {x2}, {x3}, {x4}, {x5}}[[1 ;; n]];
+           
+           Equal[Row[{matrix, vector}], 
+            matrix.Table[{RandomInteger[{-10, 10}]}, {i, 1, n}]]]}],
+       linear4 :> Column[{"Find the determinant.", Block[{a},
+           a = RandomInteger[{2, 4}]; 
+           Row[{Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}]}]]}],
+       
+       
+       complex1 :> 
+        Column[{"Find the resulting complex number.", 
+          Block[{a, b, c}, 
+           HoldForm[(a + I b)^c] /. {a -> 
+              RandomReal[{-2, 2}, WorkingPrecision -> 4], 
+             b -> RandomReal[{-2, 2}, WorkingPrecision -> 4], 
+             c -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]}]}],
+       complex2 :> 
+        Column[{"Find the magnitude and angle of the complex number.",
+           Block[{a, b}, 
+           a + b I /. {a -> 
+              RandomReal[{-50, 50}, WorkingPrecision -> 4], 
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4]}]}],
+       complex3 :> 
+        Column[{"Multiply the following complex numbers.", 
+          Block[{a, b, c, d}, 
+           HoldForm[(a + b I) (c + d I)] /. {a -> 
+              RandomReal[{-2, 2}, WorkingPrecision -> 4], 
+             b -> RandomReal[{-2, 2}, WorkingPrecision -> 4], 
+             c -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4], 
+             d -> RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]}]}],
+       complex4 :> 
+        Block[{a, b, c, z, fun1}, 
+         Column[{"Solve for the complex value \!\(\*
 StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", 
-          Equal[fun1[z], 
-            a + b I] //. {a -> 
-             RandomReal[{-50, 50}, WorkingPrecision -> 4], 
-            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4], 
-            c -> RandomReal[{-10, 10}], 
-            fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, 
-               Function[x, x^c]}[[RandomInteger[{1, 9}]]]}}]]
-      
-      
-      |>[ToExpression[
-      ToLowerCase[
-        ToString[
-         name /. {alg -> algebra, tri -> trigonometry, 
-           pre -> precalculus, cal -> calculus, lin -> linear, 
-           com -> complex}]] <> 
-       ToString[
-        RandomInteger[{1, 
-          ToExpression[
-           ToUpperCase[
-            ToString[
-             name /. {alg -> algebra, tri -> trigonometry, 
-               pre -> precalculus, cal -> calculus, lin -> linear, 
-               com -> complex}]]]}]]]] // TraditionalForm])
+           Equal[fun1[z], 
+             a + b I] //. {a -> 
+              RandomReal[{-50, 50}, WorkingPrecision -> 4], 
+             b -> RandomReal[{-50, 50}, WorkingPrecision -> 4], 
+             c -> RandomReal[{-10, 10}], 
+             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+                 Function[x, x^c]}[[RandomInteger[{1, 9}]]]}}]]
+       
+       
+       |>[ToExpression[ToLowerCase[Name] <> Number]] // 
+     TraditionalForm,
+    
+    "I'm sorry, but " <> ToString[name] <> 
+     " is not a recognized math topic."]])
