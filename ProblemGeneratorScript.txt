@@ -32,7 +32,7 @@ Prob[name_] :=
             c -> RandomInteger[{-20, 20}],
             d -> RandomInteger[{-20, 20}]}]}],
       algebra4 :> 
-       Column[{"Solve for x.", 
+       Column[{"Solve for x and y.", 
          Block[{a, b, c, d, e, f}, {a = RandomInteger[{-10, 10}],
            b = RandomInteger[{-10, 10}],
            c = RandomInteger[{-10, 10}],
