@@ -45,7 +45,7 @@ Prob[name_] :=
       
       
       trigonometry1 :> 
-       Column["Solve for the angle x.", 
+       Column[{"Solve for the angle x.", 
         Block[{a, b, c, fun}, 
          Equal[(-1)^RandomInteger[{0, 1}] (Abs[a] + Abs[b] + .1) fun[
               x] + c, 
@@ -53,9 +53,9 @@ Prob[name_] :=
             RandomReal[{-50, 50}, WorkingPrecision -> 4],
            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
            c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Sin, Cos}[[RandomInteger[{1, 2}]]]}]],
+           fun -> {Sin, Cos}[[RandomInteger[{1, 2}]]]}]}],
       trigonometry2 :> 
-       Column["Solve for the angle x.", 
+       Column[{"Solve for the angle x.", 
         Block[{a, b, c, fun}, 
          Equal[a fun[x] + c, 
            c + (-1)^
@@ -64,16 +64,16 @@ Prob[name_] :=
                  1}]) RandomReal[{1, 100}, WorkingPrecision -> 4],
            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
            c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Sec, Csc}[[RandomInteger[{1, 2}]]]}]],
+           fun -> {Sec, Csc}[[RandomInteger[{1, 2}]]]}]}],
       trigonometry3 :> 
-       Column["Solve for the angle x.", 
+       Column[{"Solve for the angle x.", 
         Block[{a, b, c, fun}, 
          Equal[a fun[x] + c, 
            b + c] /. {a -> (-1)^(RandomInteger[{0, 1}]) RandomReal[{1,
                 50}, WorkingPrecision -> 4],
            b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
            c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
-           fun -> {Tan, Cot}[[RandomInteger[{1, 2}]]]}]],
+           fun -> {Tan, Cot}[[RandomInteger[{1, 2}]]]}]}],
       
       
       precalculus1 :> Column[{"Solve for \!\(\*
