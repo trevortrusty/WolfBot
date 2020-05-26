@@ -286,5 +286,5 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).",
        |>[ToExpression[ToLowerCase[Name] <> Number]] // 
      TraditionalForm,
     
-    "I'm sorry, but " <> ToString[name] <> 
-     " is not a recognized math topic."]])
+    Column[{"I'm sorry, but " <> ToString[name] <> 
+     " is not a recognized math topic.","Currently supported topics include:","algebra/alg, trigonometry/tri, precalculus/pre","calculus/cal, linear/lin (linear algebra), complex/com (basic complex analysis"}]]])
