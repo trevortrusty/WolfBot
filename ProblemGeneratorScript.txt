@@ -145,13 +145,13 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
              Hold[D][TraditionalForm[fun1[x] fun2[x] fun3[x]], 
               x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
              
-             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt}[[RandomInteger[{1, 9}]]],
              
-             fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt}[[RandomInteger[{1, 9}]]],
              
-             fun3 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun3 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
            u__] -> HoldForm[D[u]]},
        calculus2 :> 
@@ -160,10 +160,10 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
              Hold[D][TraditionalForm[fun1[fun2[x]]], 
               x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
              
-             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt}[[RandomInteger[{1, 9}]]],
              
-             fun2 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
            u__] -> HoldForm[D[u]]},
        calculus3 :> 
@@ -172,7 +172,7 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
              Hold[D][TraditionalForm[fun1[x]^a], 
               x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
              
-             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
+             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
                  Sqrt, Function[u, u]}[[RandomInteger[{1, 10}]]],
              
              a -> (-1)^
