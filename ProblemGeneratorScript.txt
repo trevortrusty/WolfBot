@@ -140,47 +140,54 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
        
        
        calculus1 :> 
-         Column[{"Differentiate using product rule.", 
-           Block[{fun1, fun2, fun3}, 
-             Hold[D][TraditionalForm[fun1[x] fun2[x] fun3[x]], 
-              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-             
-             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt}[[RandomInteger[{1, 9}]]],
-             
-             fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt}[[RandomInteger[{1, 9}]]],
-             
-             fun3 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
-           u__] -> HoldForm[D[u]]},
+        Column[{"Differentiate using product rule.", 
+          Block[{fun1, fun2, fun3}, 
+           Hold[D]@
+              Sequence[fun1[x] fun2[x] fun3[x], 
+               x] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+              
+              fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                 ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]],
+              
+              fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                 ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]],
+              
+              fun3 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                 ArcCos, ArcTan, 
+                 Sqrt}[[RandomInteger[{1, 9}]]]} /. {Hold[D][u__] -> 
+              HoldForm[D[u]]}]}],
        calculus2 :> 
-         Column[{"Differentiate using chain rule.", 
-           Block[{fun1, fun2, fun3}, 
-             Hold[D][TraditionalForm[fun1[fun2[x]]], 
-              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-             
-             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt}[[RandomInteger[{1, 9}]]],
-             
-             fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt}[[RandomInteger[{1, 9}]]]}}] /. {Hold[D][
-           u__] -> HoldForm[D[u]]},
+        Column[{"Differentiate using chain rule.", 
+          Block[{fun1, fun2, fun3}, 
+           Hold[D]@
+              Sequence[fun1[fun2[x]], 
+               x] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+              
+              fun1 -> {Function[x, E^x], Function[x, E^x], Log, Sin, 
+                 Cos, Tan, ArcSin, ArcCos, ArcTan, Sqrt}[[
+                RandomInteger[{1, 9}]]],
+              
+              fun2 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                 ArcCos, ArcTan, Sqrt}[[
+                RandomInteger[{1, 9}]]]} /. {Hold[D][u__] -> 
+              HoldForm[D[u]]}]}],
        calculus3 :> 
-         Column[{"Differentiate using power rule.", 
-           Block[{fun1, a}, 
-             Hold[D][TraditionalForm[fun1[x]^a], 
-              x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
-             
-             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Sqrt, Function[u, u]}[[RandomInteger[{1, 10}]]],
-             
-             a -> (-1)^
-                RandomInteger[{0, 1}] RandomInteger[{1, 
-                 20}]}}] /. {Hold[D][u__] -> HoldForm[D[u]]},
+        Column[{"Differentiate using power rule.", 
+          Block[{fun1, a}, 
+           Hold[D]@
+              Sequence[TraditionalForm[fun1[x]^a], 
+               x] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+              
+              fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                 ArcCos, ArcTan, Sqrt, Function[u, u]}[[
+                RandomInteger[{1, 10}]]],
+              
+              a -> (-1)^
+                 RandomInteger[{0, 1}] RandomInteger[{1, 
+                  20}]} /. {Hold[D][u__] -> HoldForm[D[u]]}]}],
        calculus4 :> 
         Column[{"Evaluate the given integral.", 
-          Block[{a, b, c, d, e, f, x}, 
+          Block[{a, b, c, d, e, f, t, x, y, z}, 
            HoldForm[
              Integrate[a x^5 + b x^4 + c x^3 + d x^2 + e x + f, 
               x]] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
@@ -191,18 +198,19 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
              e -> RandomReal[{-10, 10}, WorkingPrecision -> 4],
              f -> RandomReal[{-10, 10}, WorkingPrecision -> 4]}]}], 
        calculus5 :> 
-         Column[{"Evaluate the given integral.", 
-           Block[{fun1, fun2, x}, 
-            Hold[Integrate][fun1[x] fun2[x], 
-              x] //. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
+        Column[{"Evaluate the given integral.", 
+          Block[{fun1, fun2, x}, 
+           Hold[Integrate]@
+              Sequence[TraditionalForm[fun1[x] fun2[x]], 
+               x] //. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
               
-              fun1 -> {Exp, Sin, Cos, Function[u, u^a]}[[
-                RandomInteger[{1, 4}]]],
+              fun1 -> {Function[x, E^x], Sin, Cos, 
+                 Function[u, u^a]}[[RandomInteger[{0, 4}]]],
               
-              fun2 -> {Exp, Sin, Cos, Function[u, u^a]}[[
-                RandomInteger[{1, 4}]]],
+              fun2 -> {Function[x, E^x], Sin, Cos, 
+                 Function[u, u^a]}[[RandomInteger[{0, 4}]]],
               a -> RandomInteger[{1, 5}]
-              }]}] /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]},
+              } /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]}]}],
        
        
        linear1 :> Column[{"Add the given matrices", Block[{a, b, c, d},
@@ -256,6 +264,7 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Block[{matrix, a, b, c},
        complex3 :> 
         Column[{"Multiply the following complex numbers.", 
           Block[{a, b, c, d}, 
+           
            HoldForm[(a + b I) (c + d I)] /. {a -> 
               RandomReal[{-2, 2}, WorkingPrecision -> 4], 
              b -> RandomReal[{-2, 2}, WorkingPrecision -> 4], 
