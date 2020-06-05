@@ -2,27 +2,28 @@ Prob[name_] :=
  (Clear[t, x, y, z, x1, x2, x3, x4, x5];
   
   
-  
-  Block[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, LINEAR , 
-    COMPLEX, Name, Number},
+  Block[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, ORDINARY, 
+    LINEAR , COMPLEX, Name, Number},
    
    If[Length[
-      Position[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, LINEAR ,
-         COMPLEX}, 
+      Position[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, 
+        ORDINARY, LINEAR , COMPLEX}, 
        ToExpression[
         ToUpperCase[
          ToString[
           ToExpression[
             ToLowerCase[ToString[name]]] /. {alg -> algebra, 
             tri -> trigonometry, pre -> precalculus, cal -> calculus, 
-            lin -> linear, com -> complex}]]]]] == 1,
+            ode -> ordinary, ord -> ordinary, lin -> linear, 
+            com -> complex}]]]]] == 1,
     
     Name = 
      ToString[
       ToExpression[ToLowerCase[ToString[name]]] /. {alg -> algebra, 
         tri -> trigonometry, pre -> precalculus, cal -> calculus, 
-        lin -> linear, com -> complex}]; ALGEBRA = 4; 
-    TRIGONOMETRY = 5; PRECALCULUS = 4; CALCULUS = 6; LINEAR = 8; 
+        ode -> ordinary, ord -> ordinary, lin -> linear, 
+        com -> complex}]; ALGEBRA = 4; TRIGONOMETRY = 5; 
+    PRECALCULUS = 4; CALCULUS = 6; ORDINARY = 5; LINEAR = 8; 
     COMPLEX = 4; 
     Number = 
      ToString[
@@ -33,7 +34,8 @@ Prob[name_] :=
            ToExpression[
              ToLowerCase[ToString[name]]] /. {alg -> algebra, 
              tri -> trigonometry, pre -> precalculus, cal -> calculus,
-              lin -> linear, com -> complex}]]]}]];
+              ode -> ordinary, ord -> ordinary, lin -> linear, 
+             com -> complex}]]]}]];
     
     <|
        
@@ -83,9 +85,8 @@ Prob[name_] :=
        trigonometry1 :> 
         Column[{"Solve for the angle x.", 
           Block[{a, b, c, fun}, 
-           Equal[(-1)^
-                RandomInteger[{0, 1}] (Abs[a] + Abs[b] + .1) fun[x] + 
-              c, a + c] /. {a -> 
+           Equal[(-1)^RandomInteger[{0, 1}] (Abs[a] + Abs[b]) fun[x] +
+               c, a + c] /. {a -> 
               RandomReal[{-50, 50}, WorkingPrecision -> 4],
              b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
              c -> RandomReal[{-100, 100}, WorkingPrecision -> 4],
@@ -167,7 +168,6 @@ Prob[name_] :=
        precalculus4 :> 
         Column[{"Find the vertex of the given quadratic equation.", 
           Block[{a, b, c, d, x}, 
-           
            a x^2 + b x + 
              c /. {a -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
              b -> RandomReal[{-50, 50}, WorkingPrecision -> 4],
@@ -229,7 +229,6 @@ Prob[name_] :=
           Block[{i, function, fun1, 
             fun2}, (Hold[D]@
                ReleaseHold[
-                
                 Hold[ReplaceAll[{x -> {x, y, z, t}[[
                     RandomInteger[{1, 4}]]],
                     
@@ -257,7 +256,6 @@ Prob[name_] :=
            ]}], 
        calculus5 :> 
         Column[{"Evaluate the given integral.", 
-          
           Block[{a, i, fun1, fun2, x}, 
            Hold[Integrate]@
               Sequence[
@@ -315,12 +313,78 @@ Prob[name_] :=
        calculus7 :> 
         Column[{"Evaluate the given derivative.", 
           Block[{a, b, c, d, e, f, t, x, y, z}, 
-           Hold[D][Table[a x^a, {i, 1, RandomInteger[{1, 4}]}], 
+           Hold[D][Table[a x^a, {i, 1, RandomInteger[{1, 5}]}], 
               x] /. {x -> {x, y, z, t}[[RandomInteger[{1, 4}]]],
               a :> RandomInteger[{-10, 10}]} //. {Hold[D][u_, v_] -> 
               Held[D][Total[u], v], 
              Held[D][u_, v_] -> HoldForm[D[u, v]]}
            ]}],
+       
+       
+       ordinary1 :> 
+        Block[{a, b, c, d, e, f, t, u, x, y, z, fun1, fun2},
+         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+         fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
+            Function[v, t^RandomInteger[{1, 15}]]}[[
+           RandomInteger[{1, 6}]]]; 
+         Column[{"Use Laplace Transform to solve for " <> 
+             ToString[fun1] <> "[t].", 
+            a fun1''[t] + b fun1'[t] + c fun1[t] == 
+             d fun2''[t] + e fun2'[t] + f fun2[t]}] /.
+          {a -> RandomInteger[{-20, 20}],
+           b -> RandomInteger[{-20, 20}],
+           c -> RandomInteger[{-20, 20}],
+           d -> RandomInteger[{-20, 20}],
+           e -> RandomInteger[{-20, 20}],
+           f -> RandomInteger[{-20, 20}]
+           }],
+       ordinary2 :> 
+        Block[{a, b, c, d, e, f, t, u, x, y, z, fun1, fun2, tab},
+         tab = 
+          Table[a D[fun1[t], {t, i}], {i, 0, RandomInteger[{2, 4}]}];
+         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+         fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
+            Function[v, t^RandomInteger[{1, 15}]]}[[
+           RandomInteger[{1, 6}]]]; 
+         Column[{"Use Laplace Transform to solve for " <> 
+             ToString[fun1] <> "[t].", 
+            Equal[(tab /. List -> Plus), 0]}] /. {a :> 
+            RandomInteger[{-20, 20}],
+           b -> RandomInteger[{-20, 20}],
+           c -> RandomInteger[{-20, 20}],
+           d -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}]
+           }],
+       ordinary3 :> 
+        Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1, fun2},
+         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+         fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
+            Function[v, t^RandomInteger[{1, 15}]]}[[
+           RandomInteger[{1, 6}]]]; Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", 
+            a fun1''[t] + b fun1'[t] + c fun1[t] == 0}] /. {a -> 
+            RandomInteger[{-20, 20}],
+           b -> RandomInteger[{-20, 20}],
+           c -> RandomInteger[{-20, 20}]
+           }],
+       ordinary4 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
+         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+         Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", a fun1'[t] == c fun1[t]^b}] /.
+          {a -> RandomInteger[{-20, 20}],
+           b -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 10}],
+           c -> RandomInteger[{-20, 20}]
+           }],
+       ordinary5 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
+         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+         Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", fun1'[t] + a fun1[t] == c }] /.
+          {a -> RandomInteger[{-20, 20}],
+           b -> (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 20}],
+           c -> RandomInteger[{-20, 20}]
+           }],
        
        
        linear1 :> Column[{"Add the given matrices", Block[{a, b, c, d},
@@ -424,13 +488,21 @@ StyleBox[\"z\",\nFontSlant->\"Italic\"]\).",
               RandomReal[{-50, 50}, WorkingPrecision -> 4], 
              b -> RandomReal[{-50, 50}, WorkingPrecision -> 4], 
              c -> RandomReal[{-10, 10}], 
-             fun1 -> {Exp, Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan,
-                 Function[x, x^c]}[[RandomInteger[{1, 9}]]]}
+             fun1 -> {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+                ArcCos, ArcTan, Function[x, x^c]}[[
+               RandomInteger[{1, 9}]]]}
            }]]
        
        
        |>[ToExpression[ToLowerCase[Name] <> Number]] // 
      TraditionalForm,
     
-    "I'm sorry, but " <> ToString[name] <> 
-     " is not a recognized math topic."]])
+    Style[
+     Column[{"I'm sorry, but " <> ToString[name] <> 
+        " is not a recognized math topic.",
+       "The available topics include:",
+       "algebra/alg, precalculus/pre, trigonometry/tri",
+       "precalculus/pre, calculus/cal, linear/lin (linear algebra)",
+       "ordinary/ord/ode (ordinary differential equations)",
+       "and complex/com (introductory complex analysis."}], 
+     FontFamily -> "Times New Roman"]]])
