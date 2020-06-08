@@ -8,10 +8,10 @@ Features include:
 - Easy to learn and use syntax and functions
 
 My four current discord commands are
-- $bark (***Takes in Wolfram code from you to be evaluated***)
-- $alpha (***Mathematica tool that queries Wolfram|Alpha. It doesn't do everything that Wolfram|Alpha can do, it's a very minimal feature of WolfBot***)
-- $help (***Sends a message regarding the bot info, and the commands listed here with their syntax***)
-- $docs (***Searches the Wolfram Language Documentation for you***)
+- .bark (***Takes in Wolfram code from you to be evaluated***)
+- .alpha (***Mathematica tool that queries Wolfram|Alpha. It doesn't do everything that Wolfram|Alpha can do, it's a very minimal feature of WolfBot***)
+- .help (***Sends a message regarding the bot info, and the commands listed here with their syntax***)
+- .docs (***Searches the Wolfram Language Documentation for you***)
 
 ## Using WolfBot
   WolfBot relies on the Wolfram programming language and its syntax for input.
@@ -19,10 +19,10 @@ My four current discord commands are
 __**Bark Command**__
 - Plot the graph of `E^x` from 0 to 5:
 ```
-$bark Plot[E^x, {x, 0, 5}]
+.bark Plot[E^x, {x, 0, 5}]
 ```
 - Define a function `Sin[x]`, then graph the function from -π to π:
  ```
- $bark f = Sin[x];
+ .bark f = Sin[x];
 Plot[f, {x, -Pi, Pi}]
 ```
