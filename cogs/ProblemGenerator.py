@@ -38,6 +38,7 @@ class ProblemGenerator(commands.Cog):
 
             # await crop()
             await ctx.send(file=discord.File(f'{file}/output/problemgen.jpg'))
+            await ctx.send(file=discord.File('SPOILER_solutions.png'))
 
            
             #embeds.tail_message.description = f'Requested by\n{ctx.message.author.mention}'

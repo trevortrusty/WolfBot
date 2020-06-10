@@ -16,5 +16,10 @@ class Fun(commands.Cog):
     async def say(self, ctx, *, message):
         await ctx.send(message)
 
+    # Say
+    @commands.command()
+    async def test(self, ctx):
+        await ctx.send(file='output/output.gif')
+
 def setup(client):
     client.add_cog(Fun(client))
