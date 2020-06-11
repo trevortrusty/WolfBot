@@ -444,8 +444,8 @@ Prob[name_] :=
         Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1, fun2, piece},
          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
          fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
-            Function[v, 
-             t^RandomInteger[{1, 15}]]}[[RandomInteger[{1, 6}]]];
+            Function[v, t^RandomInteger[{1, 15}]]}[[
+           RandomInteger[{1, 6}]]];
          a = RandomInteger[{-20, 20}];
          b = RandomInteger[{-20, 20}];
          c = RandomInteger[{-20, 20}];
@@ -595,9 +595,8 @@ StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
                 RandomInteger[{0, 1}] RandomInteger[{1, 10}]}, {i, 1, 
               a}];
            
-           mat = {LowerTriangularize, 
-               UpperTriangularize}[[RandomInteger[{1, 2}]]][
-             b.b\[Transpose]];
+           mat = {LowerTriangularize, UpperTriangularize}[[
+              RandomInteger[{1, 2}]]][b.b\[Transpose]];
            
            Export["SPOILER_solutions.png", 
             Style[TraditionalForm[ Eigenvalues[mat] // MatrixForm], 
@@ -666,11 +665,12 @@ StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
              Function[x, x^c]}[[RandomInteger[{1, 9}]]]};
          Export["SPOILER_solutions.png", 
           
-          Style[TraditionalForm[Quiet[Solve[fun1[z] == a + b I, z]]], 
+          Style[TraditionalForm[
+            Quiet[InverseFunction[fun1]][a + b I]], 
            FontColor -> Black, Large, FontFamily -> "Cambria"], 
           Background -> None]; 
          Column[{"Solve for the complex value \!\(\*
-StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", Equal[fun1[z], a + b I]
+StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", fun1[z] == a + b I
            }]]
        
        
