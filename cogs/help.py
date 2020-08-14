@@ -37,6 +37,8 @@ class Help(commands.Cog):
                 await ctx.send('```.alpha <Wolfram Alpha Query>```')
             elif command == 'docs':
                 await ctx.send('```.docs <Search keyword in the Wolfram Documentation```')
+            #elif command == 'prob':
+                #await ctx.send('```.prob <math topic>```')
         # await ctx.send(embeds.__file__)
 
     
