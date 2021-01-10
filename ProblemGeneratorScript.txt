@@ -1,33 +1,13 @@
 Prob[name_] :=
- (Clear[t, x, y, z, x1, x2, x3, x4, x5];
-  
-  
-  Block[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, ORDINARY, 
-    LINEAR , COMPLEX, Name, Number, Solution},
+  (Clear[t, x, y, z, x1, x2, x3, x4, x5];
    
-   If[Length[
-      Position[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, 
-        ORDINARY, LINEAR , COMPLEX}, 
-       ToExpression[
-        ToUpperCase[
-         ToString[
-          ToExpression[
-            ToLowerCase[ToString[name]]] /. {alg -> algebra, 
-            tri -> trigonometry, pre -> precalculus, cal -> calculus, 
-            ode -> ordinary, ord -> ordinary, lin -> linear, 
-            com -> complex}]]]]] == 1,
+   
+   Block[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, ORDINARY, 
+     LINEAR , COMPLEX, Name, Number, Solution},
     
-    Name = 
-     ToString[
-      ToExpression[ToLowerCase[ToString[name]]] /. {alg -> algebra, 
-        tri -> trigonometry, pre -> precalculus, cal -> calculus, 
-        ode -> ordinary, ord -> ordinary, lin -> linear, 
-        com -> complex}]; ALGEBRA = 4; TRIGONOMETRY = 5; 
-    PRECALCULUS = 4; CALCULUS = 6; ORDINARY = 5; LINEAR = 8; 
-    COMPLEX = 4; 
-    Number = 
-     ToString[
-      RandomInteger[{1, 
+    If[Length[
+       Position[{ALGEBRA, TRIGONOMETRY, PRECALCULUS, CALCULUS, 
+         ORDINARY, LINEAR , COMPLEX}, 
         ToExpression[
          ToUpperCase[
           ToString[
@@ -35,654 +15,698 @@ Prob[name_] :=
              ToLowerCase[ToString[name]]] /. {alg -> algebra, 
              tri -> trigonometry, pre -> precalculus, cal -> calculus,
               ode -> ordinary, ord -> ordinary, lin -> linear, 
-             com -> complex}]]]}]];
-    
-    <|
-       
-       algebra1 :> Column[{"Solve for x.", Block[{a, b, c, d},
-           a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 5}];
-           b = (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 10}];
-           c = RandomInteger[{-10, 10}];
-           d = RandomInteger[{-25, 25}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[Column[{x -> a, x -> b}], FontColor -> Black, Large,
-              FontFamily -> "Cambria"], Background -> None];
-           Equal[Expand[a (x - b) (x - c) + d], d]
-           ]}],
-       algebra2 :> Column[{"Solve for x.", Block[{a, b, c},
-           a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 10}];
-           b = RandomInteger[{-10, 10}];
-           c = RandomInteger[{-20, 20}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[x -> b], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           Equal[a x + c, a b + c]
-           ]}],
-       algebra3 :> Column[{"Solve for x.", Block[{a, b, c, d},
-           a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 5}];
-           b = (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 15}];
-           c = RandomInteger[{-20, 20}];
-           d = RandomInteger[{-20, 20}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Column[{x -> 0, x -> b, x -> c}]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Equal[Expand[a x (x - b) (x - c) + d], d]
-           ]}],
-       algebra4 :> 
-        Column[{"Solve for x and y.", Block[{a, b, c, d, e, f},
-           a = RandomInteger[{-10, 10}];
-           b = RandomInteger[{-10, 10}];
-           c = RandomInteger[{-10, 10}];
-           d = RandomInteger[{-10, 10}];
-           e = RandomInteger[{-10, 10}];
-           f = RandomInteger[{-10, 10}];
-           If[a d == b c, a = a + 1, a = a];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Column[{x -> a, y -> b}]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Column[{Equal[{c, d}.{x, y}, {a, b}.{c, d}], 
-             Equal[{e, f}.{x, y}, {a, b}.{e, f}]}]
-           ]}],
-       
-       
-       trigonometry1 :> 
-        Column[{"Solve for the angle x.", Block[{a, b, c, fun},
-           a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
-           fun = {Sin, Cos}[[RandomInteger[{1, 2}]]];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[
-              Quiet[Solve[
-                Equal[(-1)^
-                    RandomInteger[{0, 1}] (Abs[a] + Abs[b]) fun[x] + 
-                  c, a + c], x]]], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           
-           Equal[(-1)^RandomInteger[{0, 1}] (Abs[a] + Abs[b]) fun[x] +
-              c, a + c]
-           ]}],
-       trigonometry2 :> 
-        Column[{"Solve for the angle x.", Block[{a, b, c, fun},
-           
-           a = (-1)^(RandomInteger[{0, 1}]) RandomReal[{1, 100}, 
-              WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
-           fun = {Sec, Csc}[[RandomInteger[{1, 2}]]];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[
-              Quiet[Solve[
-                Equal[a fun[x] + c, 
-                 c + (-1)^RandomInteger[{0, 1}] (Abs[b] + Abs[a])], 
-                x]]], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           
-           Equal[a fun[x] + c, 
-            c + (-1)^RandomInteger[{0, 1}] (Abs[b] + Abs[a])]
-           ]}],
-       trigonometry3 :> 
-        Column[{"Solve for the angle x.", Block[{a, b, c, fun},
-           
-           a = (-1)^(RandomInteger[{0, 1}]) RandomReal[{1, 50}, 
-              WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
-           fun = {Tan, Cot}[[RandomInteger[{1, 2}]]];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[
-              Quiet[Solve[Equal[a fun[x] + c, b + c], x]]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Equal[a fun[x] + c, b + c]
-           ]}],
-       trigonometry4 :> 
-        Column[{"Find the dot of the two given vectors.", Block[{a, b},
-           a = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
-           b = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[a.b], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           
-           StringReplace[ToString[a], {"{" -> "<", "}" -> ">"}] <> 
-            " and " <> 
-            StringReplace[ToString[b], {"{" -> "<", "}" -> ">"}]
-           ]}],
-       trigonometry5 :> 
-        Column[{"Find the cross of the two given vectors.", 
-          Block[{a, b},
-           a = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
-           b = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Cross[a, b]], FontColor -> Black, 
-             Large, FontFamily -> "Cambria"], Background -> None];
-           
-           StringReplace[ToString[a], {"{" -> "<", "}" -> ">"}] <> 
-            " and " <> 
-            StringReplace[ToString[b], {"{" -> "<", "}" -> ">"}]
-           ]}],
-       
-       
-       precalculus1 :> 
-        Column[{"Solve for x, y, and z.", 
-          Block[{matrix, a, b, c, x, y, z},
-           
-           matrix = 
-            Table[RandomInteger[{-15, 15}], {i, 1, 3}, {k, 1, 3}];
-           a = RandomInteger[{-25, 25}];
-           b = RandomInteger[{-25, 25}];
-           c = RandomInteger[{-25, 25}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[{{a}, {b}, {c}} // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Equal[Row[{MatrixForm[matrix], MatrixForm[{x, y, z}]}], 
-            MatrixForm[matrix.{a, b, c}]]
-           ]}],
-       precalculus2 :> Column[{"Solve for x.", Block[{a, b, c, d, x},
-           a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           c = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           d = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[
-              Quiet[NSolve[Equal[a x^2 + b x + c, d], x]]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Equal[a x^2 + b x + c, d]
-           ]}],
-       precalculus3 :> Column[{"Solve for x.", Block[{a, b, c, x},
-           a = RandomReal[{1, 5}, WorkingPrecision -> 4];
-           b = RandomReal[{-5, 5}, WorkingPrecision -> 4];
-           c = RandomReal[{1, 3}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Quiet[Solve[Equal[c a^x, a^b], x]]],
+             com -> complex}]]]]] == 1,
+     
+     Name = 
+      ToString[
+       ToExpression[ToLowerCase[ToString[name]]] /. {alg -> algebra, 
+         tri -> trigonometry, pre -> precalculus, cal -> calculus, 
+         ode -> ordinary, ord -> ordinary, lin -> linear, 
+         com -> complex}]; ALGEBRA = 4; TRIGONOMETRY = 5; 
+     PRECALCULUS = 4; CALCULUS = 6; ORDINARY = 5; LINEAR = 8; 
+     COMPLEX = 4; 
+     Number = 
+      ToString[
+       RandomInteger[{1, 
+         ToExpression[
+          ToUpperCase[
+           ToString[
+            ToExpression[
+              ToLowerCase[ToString[name]]] /. {alg -> algebra, 
+              tri -> trigonometry, pre -> precalculus, 
+              cal -> calculus, ode -> ordinary, ord -> ordinary, 
+              lin -> linear, com -> complex}]]]}]];
+     
+     <|
+        
+        algebra1 :> Column[{"Solve for x.", Block[{a, b, c, d},
+            a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 5}];
+            b = (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 10}];
+            c = RandomInteger[{-10, 10}];
+            d = RandomInteger[{-25, 25}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[Column[{x -> a, x -> b}], FontColor -> Black, 
+              Large, FontFamily -> "Cambria"], Background -> None];
+            Equal[Expand[a (x - b) (x - c) + d], d]
+            ]}],
+        algebra2 :> Column[{"Solve for x.", Block[{a, b, c},
+            a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 10}];
+            b = RandomInteger[{-10, 10}];
+            c = RandomInteger[{-20, 20}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[x -> b], FontColor -> Black, Large,
+               FontFamily -> "Cambria"], Background -> None];
+            Equal[a x + c, a b + c]
+            ]}],
+        algebra3 :> Column[{"Solve for x.", Block[{a, b, c, d},
+            a = (-1)^(RandomInteger[{1, 0}]) RandomInteger[{1, 5}];
+            b = (-1)^RandomInteger[{1, 0}] RandomInteger[{1, 15}];
+            c = RandomInteger[{-20, 20}];
+            d = RandomInteger[{-20, 20}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[Column[{x -> 0, x -> b, x -> c}]], 
               FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Equal[c a^x, a^b]
-           ]}],
-       precalculus4 :> 
-        Column[{"Find the vertex of the given quadratic equation.", 
-          Block[{a, b, c, d, x},
-           a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           c = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[N[Floor[-10^8 b/(2 a)] 10^-8]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           a x^2 + b x + c
-           ]}],
-       
-       
-       calculus1 :> 
-        Column[{"Differentiate using product rule.", 
-          Block[{t, x, y, z, i, function, fun1, fun2, fun3, piece},
-           (Hold[D]@ReleaseHold[
-                x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-                
-                fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                
-                fun2 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                
-                fun3 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                
-                piece = 
-                 Table[fun1[x] fun2[x] fun3[x], {i, 1, 
-                   RandomInteger[{1, 2}]}];
-                
-                Export["SPOILER_solutions.png", 
-                 Style[TraditionalForm[D[Total[piece], x]], 
-                  FontColor -> Black, Large, FontFamily -> "Cambria"],
-                  Background -> None];
-                function[piece
-                 , x]]) /. {function[a_, b_] :> 
-               function[Total[a], b]} /. {Hold[D][function[a_, b_]] ->
-               HoldForm[D[a, b]]}
-           ]}],
-       calculus2 :> 
-        Column[{"Differentiate using chain rule.", 
-          Block[{t, x, y, z, i, function, fun1, fun2, 
-            piece}, (Hold[D]@ReleaseHold[
-                x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-                
-                fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                
-                fun2 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                
-                piece = 
-                 Table[fun1[fun2[x]], {i, 1, RandomInteger[{1, 3}]}];
-                
-                Export["SPOILER_solutions.png", 
-                 Style[TraditionalForm[D[Total[piece], x]], 
-                  FontColor -> Black, Large, FontFamily -> "Cambria"],
-                  Background -> None];
-                function[piece
-                 , x]]) /. {function[a_, b_] :> 
-               function[Total[a], b]} /. {Hold[D][function[a_, b_]] ->
-               HoldForm[D[a, b]]}
-           ]}],
-       calculus3 :> 
-        Column[{"Differentiate the following.", 
-          Block[{a, t, x, y, z, i, function, fun1, fun2, 
-            piece}, (Hold[D]@ReleaseHold[
-                x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-                
-                fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin,
-                    ArcCos, ArcTan, Sqrt}[[RandomInteger[{1, 9}]]];
-                a := RandomInteger[{-9, 9}];
-                
-                piece = 
-                 Table[a fun1[x]^a, {i, 1, RandomInteger[{1, 3}]}];
-                
-                Export["SPOILER_solutions.png", 
-                 Style[TraditionalForm[D[Total[piece], x]], 
-                  FontColor -> Black, Large, FontFamily -> "Cambria"],
-                  Background -> None];
-                function[piece
-                 , x]]) /. {function[u_, v_] :> 
-               function[Total[u], v]} /. {Hold[D][function[u_, v_]] ->
-               HoldForm[D[u, v]]}
-           ]}],
-       calculus4 :> 
-        Column[{"Evaluate the given integral.", 
-          Block[{a, i, t, x, y, z, piece},
-           x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-           a := RandomInteger[{-10, 10}];
-           piece = Table[a x^a, {i, 1, RandomInteger[{1, 4}]}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Integrate[Total[piece], x]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Hold[Integrate][piece, 
-             x] //. {Hold[Integrate][u_, v_] -> 
-              Held[Integrate][Total[u], v], 
-             Held[Integrate][u_, v_] -> HoldForm[Integrate[u, v]]}
-           ]}],
-       calculus5 :> 
-        Column[{"Evaluate the given integral.", 
-          Block[{a, i, fun1, fun2, t, x, y, z, piece},
-           x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-           
-           fun1 = {Function[x, E^x], Sin, Cos, Function[u, u^a]}[[
-             RandomInteger[{0, 4}]]];
-           
-           fun2 = {Function[x, E^x], Sin, Cos, Function[u, u^a]}[[
-             RandomInteger[{0, 4}]]];
-           a := RandomInteger[{1, 5}];
-           piece = fun1[a x] fun2[a x];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[Integrate[piece, x]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Hold[Integrate]@
-             Sequence[TraditionalForm[piece] /. List -> Plus, 
-              x] /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]}
-           ]}],
-       calculus6 :> 
-        Column[{"Find the gradient of the given function.", 
-          Block[{i, item, function, function1, fun1, fun2, x, y, z, 
-            piece},
-           item := {x, y, z}[[RandomInteger[{1, 3}]]];
-           (ReleaseHold[
-              
-              fun1 := {Times[
-                  Table[fun2, {i, 0, RandomInteger[{1, 3}]}] /. 
-                   List -> Sequence], 
-                 Plus[Table[fun2, {i, 0, RandomInteger[{1, 2}]}] /. 
-                   List -> Sequence], E^fun2, Log[fun2, fun2], 
-                 Sin[fun2], Cos[fun2], Tan[fun2], ArcSin[fun2], 
-                 ArcCos[fun2], ArcTan[fun2, fun2], 
-                 fun2^RandomInteger[{-2, 2}], 
-                 RandomInteger[{-25, 25}]}[[RandomInteger[{1, 12}]]];
-              
-              fun2 := {Times[
-           
-                      Table[item, {i, 0, RandomInteger[{1, 3}]}] /. 
-                   List -> Sequence], 
-                 Plus[Table[item, {i, 0, RandomInteger[{1, 2}]}] /. 
-                   List -> Sequence], E^item, Log[item, item], 
-                 Sin[item], Cos[item], Tan[item], ArcSin[item], 
-                 ArcCos[item], ArcTan[item, item], 
-                 item^RandomInteger[{-2, 2}], 
-                 RandomInteger[{-25, 25}]}[[RandomInteger[{1, 12}]]];
-              piece = Table[fun1, {i, 1, RandomInteger[{1, 4}]}];
-              
-              Export["SPOILER_solutions.png", 
-               Style[TraditionalForm[Grad[Total[piece], {x, y, z}]], 
-                FontColor -> Black, Large, FontFamily -> "Cambria"], 
-               Background -> None];
-              function[piece
-               , x, y, z]]) //. {function[a_, b__] :> 
-              function1[Total[a], b], 
-             function1[a_, b__] :> HoldForm[Grad[a, {b}]]}
-           ]}],
-       calculus7 :> 
-        Column[{"Evaluate the given derivative.", 
-          Block[{a, i, t, x, y, z, piece},
-           x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
-           a := RandomInteger[{-10, 10}];
-           piece = Table[a x^a, {i, 1, RandomInteger[{1, 4}]}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[D[Total[piece], x]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Hold[D][piece, 
-             x] //. {Hold[D][u_, v_] -> Held[D][Total[u], v], 
-             Held[D][u_, v_] -> HoldForm[D[u, v]]}
-           ]}],
-       
-       
-       ordinary1 :> 
-        Block[{a, b, c, d, e, f, t, u, x, y, z, fun1, fun2, fun3},
-         a = RandomInteger[{-20, 20}];
-         b = RandomInteger[{-20, 20}];
-         c = RandomInteger[{-20, 20}];
-         d = RandomInteger[{-20, 20}];
-         e = RandomInteger[{-20, 20}];
-         f = RandomInteger[{-20, 20}];
-         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
-         fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
-            Function[v, t^RandomInteger[{1, 15}]]}[[
-           RandomInteger[{1, 6}]]];
-         fun3 = fun1;
-         Export["SPOILER_solutions.png", 
-          Style[TraditionalForm[
-            DSolve[{a fun1''[t] + b fun1'[t] + c fun1[t] == 
-               d fun2''[t] + e fun2'[t] + f fun2[t]}, fun1[t], t]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None]; 
-         Column[{"Use Laplace Transform to solve for " <> 
-            ToString[fun1] <> "[t].", 
-           a fun1''[t] + b fun1'[t] + c fun1[t] == 
-            d fun2''[t] + e fun2'[t] + f fun2[t]}]],
-       ordinary2 :> Block[{a, b, c, d, t, u, x, y, z, fun1, tab, tab2},
-         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
-         a := RandomInteger[{-20, 20}];
-         b = RandomInteger[{-20, 20}];
-         c = RandomInteger[{-20, 20}];
-         d = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
-         tab = 
-          Table[a D[fun1[t], {t, i}], {i, 0, RandomInteger[{1, 3}]}];
-         tab2 = Total[tab];
-         Export["SPOILER_solutions.png", 
-          Style[TraditionalForm[
-            DSolve[tab2 == 0, fun1[t], t] /. E^u_ :> E^N[u, 4]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None];
-         Column[{"Use Laplace Transform to solve for " <> 
-            ToString[fun1] <> "[t].", Equal[tab2, 0]}]],
-       ordinary3 :> 
-        Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1, fun2, piece},
-         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
-         fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
-            Function[v, t^RandomInteger[{1, 15}]]}[[
-           RandomInteger[{1, 6}]]];
-         a = RandomInteger[{-20, 20}];
-         b = RandomInteger[{-20, 20}];
-         c = RandomInteger[{-20, 20}];
-         piece = a fun1''[t] + b fun1'[t] + c fun1[t];
-         Export["SPOILER_solutions.png", 
-          Style[TraditionalForm[DSolve[piece == 0, fun1[t], t]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None];
-         Column[{"Solve the given \!\(\*
-StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
-             "[t].", piece == 0}]],
-       ordinary4 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
-         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
-         a = RandomInteger[{-20, 20}];
-         b = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}];
-         c = RandomInteger[{-20, 20}];
-         Export["SPOILER_solutions.png", 
-          Style[TraditionalForm[
-            DSolve[a fun1'[t] == c fun1[t]^b, fun1[t], t]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None];
-         Column[{"Solve the given \!\(\*
-StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
-             "[t].", a fun1'[t] == c fun1[t]^b}]
-         ],
-       ordinary5 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
-         fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
-         a = RandomInteger[{-20, 20}];
-         b = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 20}];
-         c = RandomInteger[{-20, 20}];
-         Export["SPOILER_solutions.png", 
-          Style[TraditionalForm[
-            DSolve[b fun1'[t] + a fun1[t] == c, fun1[t], t]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None];
-         Column[{"Solve the given \!\(\*
-StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
-             "[t].", b fun1'[t] + a fun1[t] == c }]
-         ],
-       
-       
-       linear1 :> 
-        Column[{"Add the given matrices", 
-          Block[{a, b, c, d, mat1, mat2},
-           a = RandomInteger[{2, 4}];
-           b = RandomInteger[{2, 4}];
-           
-           mat1 = Table[
-             RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
-           
-           mat2 = Table[
-             RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
-           c = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
-           d = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[c mat1 + d mat2 // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Row[{c, mat1, "+", d, mat2}]
-           ]}],
-       linear2 :> 
-        Column[{"Multiply the given matrices.", 
-          Block[{a, b, mat1, mat2},
-           a = RandomInteger[{2, 4}];
-           b = RandomInteger[{2, 4}];
-           
-           mat1 = Table[
-              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
-               b}]\[Transpose];
-           
-           mat2 = Table[
-             RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ mat1. mat2 // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           Row[{mat1, mat2}]
-           ]}],
-       linear3 :> Column[{"Solve for the vector.",
-          Block[{x1, x2, x3, x4, x5, n, matrix, vector, sol},
-           n = RandomInteger[{2, 4}];
-           
-           matrix = 
-            Table[RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}];
-           
-           While[TrueQ[Det[matrix] == 0], 
+             Background -> None];
+            Equal[Expand[a x (x - b) (x - c) + d], d]
+            ]}],
+        algebra4 :> 
+         Column[{"Solve for x and y.", Block[{a, b, c, d, e, f},
+            a = RandomInteger[{-10, 10}];
+            b = RandomInteger[{-10, 10}];
+            c = RandomInteger[{-10, 10}];
+            d = RandomInteger[{-10, 10}];
+            e = RandomInteger[{-10, 10}];
+            f = RandomInteger[{-10, 10}];
+            If[a d == b c, a = a + 1, a = a];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[Column[{x -> a, y -> b}]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Column[{Equal[{c, d}.{x, y}, {a, b}.{c, d}], 
+              Equal[{e, f}.{x, y}, {a, b}.{e, f}]}]
+            ]}],
+        
+        
+        trigonometry1 :> 
+         Column[{"Solve for the angle x.", Block[{a, b, c, fun},
+            a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
+            fun = {Sin, Cos}[[RandomInteger[{1, 2}]]];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[
+               Quiet[Solve[
+                 Equal[(-1)^
+                    RandomInteger[{0, 1}] (Abs[a] + Abs[b]) fun[x] + 
+                   c, a + c], x]]], FontColor -> Black, Large, 
+              FontFamily -> "Cambria"], Background -> None];
+            
+            Equal[(-1)^RandomInteger[{0, 1}] (Abs[a] + Abs[b]) fun[
+                x] + c, a + c]
+            ]}],
+        trigonometry2 :> 
+         Column[{"Solve for the angle x.", Block[{a, b, c, fun},
+            
+            a = (-1)^(RandomInteger[{0, 1}]) RandomReal[{1, 100}, 
+               WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
+            fun = {Sec, Csc}[[RandomInteger[{1, 2}]]];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[
+               Quiet[Solve[
+                 Equal[a fun[x] + c, 
+                  c + (-1)^RandomInteger[{0, 1}] (Abs[b] + Abs[a])], 
+                 x]]], FontColor -> Black, Large, 
+              FontFamily -> "Cambria"], Background -> None];
+            
+            Equal[a fun[x] + c, 
+             c + (-1)^RandomInteger[{0, 1}] (Abs[b] + Abs[a])]
+            ]}],
+        trigonometry3 :> 
+         Column[{"Solve for the angle x.", Block[{a, b, c, fun},
+            
+            a = (-1)^(RandomInteger[{0, 1}]) RandomReal[{1, 50}, 
+               WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            c = RandomReal[{-100, 100}, WorkingPrecision -> 4];
+            fun = {Tan, Cot}[[RandomInteger[{1, 2}]]];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[
+               Quiet[Solve[Equal[a fun[x] + c, b + c], x]]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            Equal[a fun[x] + c, b + c]
+            ]}],
+        trigonometry4 :> 
+         Column[{"Find the dot of the two given vectors.", 
+           Block[{a, b},
+            a = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
+            b = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[a.b], FontColor -> Black, Large, 
+              FontFamily -> "Cambria"], Background -> None];
+            
+            StringReplace[ToString[a], {"{" -> "<", "}" -> ">"}] <> 
+             " and " <> 
+             StringReplace[ToString[b], {"{" -> "<", "}" -> ">"}]
+            ]}],
+        trigonometry5 :> 
+         Column[{"Find the cross of the two given vectors.", 
+           Block[{a, b},
+            a = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
+            b = Table[RandomInteger[{-15, 15}], {i, 1, 3}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[Cross[a, b]], FontColor -> Black, 
+              Large, FontFamily -> "Cambria"], Background -> None];
+            
+            StringReplace[ToString[a], {"{" -> "<", "}" -> ">"}] <> 
+             " and " <> 
+             StringReplace[ToString[b], {"{" -> "<", "}" -> ">"}]
+            ]}],
+        
+        
+        precalculus1 :> 
+         Column[{"Solve for x, y, and z.", 
+           Block[{matrix, a, b, c, x, y, z},
+            
             matrix = 
-             Table[RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}]];
-           vector = {{x1}, {x2}, {x3}, {x4}, {x5}}[[1 ;; n]];
-           sol = Table[{RandomInteger[{-10, 10}]}, {i, 1, n}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ sol // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           
-           Equal[Row[{matrix // MatrixForm, vector // MatrixForm}], 
-            matrix.sol // MatrixForm]
-           ]}],
-       linear4 :> Column[{"Find the determinant.", Block[{a, mat},
-           a = RandomInteger[{2, 4}];
-           mat = Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ Det[mat] // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           mat
-           ]}],
-       linear5 :> Column[{"Find the eigenvectors.", Block[{a, b, i, k},
-           a = RandomInteger[{2, 4}];
-           
-           b = Table[{(-1)^
-                RandomInteger[{0, 1}] RandomInteger[{1, 10}]}, {i, 1, 
-              a}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ 
-              Eigenvectors[b.b\[Transpose]] // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           b.b\[Transpose]
-           ]}],
-       linear6 :> 
-        Column[{"Find the orthogonal projection matrix.", 
-          Block[{a, b, i, k, mat},
-           a = RandomInteger[{1, 2}];
-           b = RandomInteger[{0, 2}];
-           
-           mat = Table[
-             RandomInteger[{-20, 20}], {i, 1, a}, {k, 1, a + b}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ 
-              mat\[Transpose].Inverse[mat.mat\[Transpose]].mat // 
-               MatrixForm], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           mat
-           ]}],
-       linear7 :> 
-        Column[{"Find the eigenvectors.", Block[{a, b, i, k, mat},
-           a = RandomInteger[{2, 4}];
-           
-           b = Table[{(-1)^
-                RandomInteger[{0, 1}] RandomInteger[{1, 10}]}, {i, 1, 
-              a}];
-           
-           mat = {LowerTriangularize, UpperTriangularize}[[
-              RandomInteger[{1, 2}]]][b.b\[Transpose]];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ Eigenvalues[mat] // MatrixForm], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           mat
-           ]}],
-       linear8 :> 
-        Column[{"Find the characteristic equation.", Block[{a, t, mat},
-           a = RandomInteger[{2, 4}];
-           mat = Table[RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ Det[mat - t IdentityMatrix[a]]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None];
-           mat
-           ]}],
-       
-       
-       complex1 :> 
-        Column[{"Find the resulting complex number.", 
-          Block[{a1, b1, c1, a, b, c},
-           a = RandomReal[{-2, 2}, WorkingPrecision -> 4]; 
-           b = RandomReal[{-2, 2}, WorkingPrecision -> 4]; 
-           c = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ (a + I b)^c], FontColor -> Black, 
-             Large, FontFamily -> "Cambria"], Background -> None];
-           HoldForm[(a1 + I b1)^c1] /. {a1 -> a, b1 -> b, c1 -> c}
-           ]}],
-       complex2 :> 
-        Column[{"Find the magnitude and angle of the complex number.",
-           Block[{a, b, r, \[Theta]},
-           a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ {r -> Sqrt[a^2 + b^2], \[Theta] -> 
-                ArcTan[a, b]}], FontColor -> Black, Large, 
-             FontFamily -> "Cambria"], Background -> None];
-           a + b I
-           ]}],
-       complex3 :> 
-        Column[{"Multiply the following complex numbers.", 
-          Block[{a, b, c, d, a1, b1, c1, d1}, 
-           a = RandomReal[{-E, E}, WorkingPrecision -> 4]; 
-           b = RandomReal[{-E, E}, WorkingPrecision -> 4]; 
-           c = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]; 
-           d = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4];
-           
-           Export["SPOILER_solutions.png", 
-            Style[TraditionalForm[ Expand[(a + b I) (c + d I)]], 
-             FontColor -> Black, Large, FontFamily -> "Cambria"], 
-            Background -> None]; 
-           HoldForm[(a1 + b1 I) (c1 + d1 I)] /. {a1 -> a, b1 -> b, 
-             c1 -> c, d1 -> d}
-           ]}],
-       complex4 :> Block[{a, b, c, z, fun1},
-         {a = RandomReal[{-50, 50}, WorkingPrecision -> 4]; 
-          b = RandomReal[{-50, 50}, WorkingPrecision -> 4]; 
-          c = RandomReal[{-10, 10}]; 
-          fun1 = {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
-             ArcCos, ArcTan, 
-             Function[x, x^c]}[[RandomInteger[{1, 9}]]]};
-         Export["SPOILER_solutions.png", 
+             Table[RandomInteger[{-15, 15}], {i, 1, 3}, {k, 1, 3}];
+            a = RandomInteger[{-25, 25}];
+            b = RandomInteger[{-25, 25}];
+            c = RandomInteger[{-25, 25}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[{{a}, {b}, {c}} // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Equal[Row[{MatrixForm[matrix], MatrixForm[{x, y, z}]}], 
+             MatrixForm[matrix.{a, b, c}]]
+            ]}],
+        precalculus2 :> Column[{"Solve for x.", Block[{a, b, c, d, x},
+            a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            c = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            d = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[
+               Quiet[NSolve[Equal[a x^2 + b x + c, d], x]]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            Equal[a x^2 + b x + c, d]
+            ]}],
+        precalculus3 :> Column[{"Solve for x.", Block[{a, b, c, x},
+            a = RandomReal[{1, 5}, WorkingPrecision -> 4];
+            b = RandomReal[{-5, 5}, WorkingPrecision -> 4];
+            c = RandomReal[{1, 3}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[
+               Quiet[Solve[Equal[c a^x, a^b], x]]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            Equal[c a^x, a^b]
+            ]}],
+        precalculus4 :> 
+         Column[{"Find the vertex of the given quadratic equation.", 
+           Block[{a, b, c, d, x},
+            a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            c = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[N[Floor[-10^8 b/(2 a)] 10^-8]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            a x^2 + b x + c
+            ]}],
+        
+        
+        calculus1 :> 
+         Column[{"Differentiate using product rule.", 
+           Block[{t, x, y, z, i, function, fun1, fun2, fun3, piece},
+            (Hold[D]@ReleaseHold[
+                 x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+                 
+                 fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 
+                 fun2 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 
+                 fun3 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 
+                 piece = 
+                  Table[fun1[x] fun2[x] fun3[x], {i, 1, 
+                    RandomInteger[{1, 2}]}];
+                 
+                 Export["SPOILER_solutions.png", 
+                  Style[TraditionalForm[D[Total[piece], x]], 
+                   FontColor -> Black, Large, 
+                   FontFamily -> "Cambria"], Background -> None];
+                 function[piece
+                  , x]]) /. {function[a_, b_] :> 
+                function[Total[a], b]} /. {Hold[D][
+                function[a_, b_]] -> HoldForm[D[a, b]]}
+            ]}],
+        calculus2 :> 
+         Column[{"Differentiate using chain rule.", 
+           Block[{t, x, y, z, i, function, fun1, fun2, 
+             piece}, (Hold[D]@ReleaseHold[
+                 x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+                 
+                 fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 
+                 fun2 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 
+                 piece = 
+                  Table[fun1[fun2[x]], {i, 1, RandomInteger[{1, 3}]}];
+                 
+                 Export["SPOILER_solutions.png", 
+                  
+                  Style[TraditionalForm[D[Total[piece], x]], 
+                   FontColor -> Black, Large, 
+                   FontFamily -> "Cambria"], Background -> None];
+                 function[piece
+                  , x]]) /. {function[a_, b_] :> 
+                function[Total[a], b]} /. {Hold[D][
+                function[a_, b_]] -> HoldForm[D[a, b]]}
+            ]}],
+        calculus3 :> 
+         Column[{"Differentiate the following.", 
+           Block[{a, t, x, y, z, i, function, fun1, fun2, 
+             piece}, (Hold[D]@ReleaseHold[
+                 x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+                 
+                 fun1 := {Function[x, E^x], Log, Sin, Cos, Tan, 
+                    ArcSin, ArcCos, ArcTan, Sqrt}[[
+                   RandomInteger[{1, 9}]]];
+                 a := RandomInteger[{-9, 9}];
+                 
+                 piece = 
+                  Table[a fun1[x]^a, {i, 1, RandomInteger[{1, 3}]}];
+                 
+                 Export["SPOILER_solutions.png", 
+                  Style[TraditionalForm[D[Total[piece], x]], 
+                   FontColor -> Black, Large, 
+                   FontFamily -> "Cambria"], Background -> None];
+                 function[piece
+                  , x]]) /. {function[u_, v_] :> 
+                function[Total[u], v]} /. {Hold[D][
+                function[u_, v_]] -> HoldForm[D[u, v]]}
+            ]}],
+        calculus4 :> 
+         Column[{"Evaluate the given integral.", 
+           Block[{a, i, t, x, y, z, piece},
+            x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+            a := RandomInteger[{-10, 10}];
+            piece = Table[a x^a, {i, 1, RandomInteger[{1, 4}]}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[Integrate[Total[piece], x]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Hold[Integrate][piece, 
+              x] //. {Hold[Integrate][u_, v_] -> 
+               Held[Integrate][Total[u], v], 
+              Held[Integrate][u_, v_] -> HoldForm[Integrate[u, v]]}
+            ]}],
+        calculus5 :> 
+         Column[{"Evaluate the given integral.", 
+           Block[{a, i, fun1, fun2, t, x, y, z, piece},
+            x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+            
+            fun1 = {Function[x, E^x], Sin, Cos, Function[u, u^a]}[[
+              RandomInteger[{0, 4}]]];
+            
+            fun2 = {Function[x, E^x], Sin, Cos, Function[u, u^a]}[[
+              RandomInteger[{0, 4}]]];
+            a := RandomInteger[{1, 5}];
+            piece = fun1[a x] fun2[a x];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[Integrate[piece, x]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Hold[Integrate]@
+              Sequence[TraditionalForm[piece] /. List -> Plus, 
+               x] /. {Hold[Integrate][u__] -> HoldForm[Integrate[u]]}
+            ]}],
+        calculus6 :> 
+         Column[{"Find the gradient of the given function.", 
+           Block[{i, item, function, function1, fun1, fun2, x, y, z, 
+             piece},
+            item := {x, y, z}[[RandomInteger[{1, 3}]]];
+            (ReleaseHold[
+               
+               fun1 := {Times[
+                   Table[fun2, {i, 0, RandomInteger[{1, 3}]}] /. 
+                    List -> Sequence], 
+                  Plus[Table[fun2, {i, 0, RandomInteger[{1, 2}]}] /. 
+                    List -> Sequence], E^fun2, Log[fun2, fun2], 
+                  Sin[fun2], Cos[fun2], Tan[fun2], ArcSin[fun2], 
+                  ArcCos[fun2], ArcTan[fun2, fun2], 
+                  fun2^RandomInteger[{-2, 2}], 
+                  RandomInteger[{-25, 25}]}[[RandomInteger[{1, 12}]]];
+               
+               fun2 := {Times[
+                   Table[item, {i, 0, RandomInteger[{1, 3}]}] /. 
+                    List -> Sequence], 
+                  Plus[Table[item, {i, 0, RandomInteger[{1, 2}]}] /. 
+                    List -> Sequence], E^item, Log[item, item], 
+                  Sin[item], Cos[item], Tan[item], ArcSin[item], 
+                  ArcCos[item], ArcTan[item, item], 
+                  item^RandomInteger[{-2, 2}], 
+                  RandomInteger[{-25, 25}]}[[RandomInteger[{1, 12}]]];
+               piece = Table[fun1, {i, 1, RandomInteger[{1, 4}]}];
+               
+               Export["SPOILER_solutions.png", 
+                Style[TraditionalForm[Grad[Total[piece], {x, y, z}]], 
+                 FontColor -> Black, Large, FontFamily -> "Cambria"], 
+                Background -> None];
+               function[piece
+                , x, y, z]]) //. {function[a_, b__] :> 
+               function1[Total[a], b], 
+              function1[a_, b__] :> HoldForm[Grad[a, {b}]]}
+            ]}],
+        calculus7 :> 
+         Column[{"Evaluate the given derivative.", 
+           Block[{a, i, t, x, y, z, piece},
+            x = {x, y, z, t}[[RandomInteger[{1, 4}]]];
+            a := RandomInteger[{-10, 10}];
+            piece = Table[a x^a, {i, 1, RandomInteger[{1, 4}]}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[D[Total[piece], x]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Hold[D][piece, 
+              x] //. {Hold[D][u_, v_] -> Held[D][Total[u], v], 
+              Held[D][u_, v_] -> HoldForm[D[u, v]]}
+            ]}],
+        
+        
+        ordinary1 :> 
+         Block[{a, b, c, d, e, f, t, u, x, y, z, fun1, fun2, fun3},
+          a = RandomInteger[{-20, 20}];
+          b = RandomInteger[{-20, 20}];
+          c = RandomInteger[{-20, 20}];
+          d = RandomInteger[{-20, 20}];
+          e = RandomInteger[{-20, 20}];
+          f = RandomInteger[{-20, 20}];
+          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
           
-          Style[TraditionalForm[
-            Quiet[InverseFunction[fun1]][a + b I]], 
-           FontColor -> Black, Large, FontFamily -> "Cambria"], 
-          Background -> None]; 
-         Column[{"Solve for the complex value \!\(\*
+          fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
+             Function[v, t^RandomInteger[{1, 15}]]}[[
+            RandomInteger[{1, 6}]]];
+          fun3 = fun1;
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[
+             DSolve[{a fun1''[t] + b fun1'[t] + c fun1[t] == 
+                d fun2''[t] + e fun2'[t] + f fun2[t]}, fun1[t], t]], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None]; 
+          Column[{"Use Laplace Transform to solve for " <> 
+             ToString[fun1] <> "[t].", 
+            a fun1''[t] + b fun1'[t] + c fun1[t] == 
+             d fun2''[t] + e fun2'[t] + f fun2[t]}]],
+        ordinary2 :> 
+         Block[{a, b, c, d, t, u, x, y, z, fun1, tab, tab2},
+          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+          a := RandomInteger[{-20, 20}];
+          b = RandomInteger[{-20, 20}];
+          c = RandomInteger[{-20, 20}];
+          d = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
+          
+          tab = Table[
+            a D[fun1[t], {t, i}], {i, 0, RandomInteger[{1, 3}]}];
+          tab2 = Total[tab];
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[
+             DSolve[tab2 == 0, fun1[t], t] /. E^u_ :> E^N[u, 4]], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None];
+          
+          Column[{"Use Laplace Transform to solve for " <> 
+             ToString[fun1] <> "[t].", Equal[tab2, 0]}]],
+        ordinary3 :> 
+         Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1, fun2, piece},
+          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+          
+          fun2 = {Cos, Sin, Function[v, E^v], Cosh, Sinh, 
+             Function[v, t^RandomInteger[{1, 15}]]}[[
+            RandomInteger[{1, 6}]]];
+          a = RandomInteger[{-20, 20}];
+          b = RandomInteger[{-20, 20}];
+          c = RandomInteger[{-20, 20}];
+          piece = a fun1''[t] + b fun1'[t] + c fun1[t];
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[DSolve[piece == 0, fun1[t], t]], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None];
+          Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", piece == 0}]],
+        ordinary4 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
+          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+          a = RandomInteger[{-20, 20}];
+          b = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 3}];
+          c = RandomInteger[{-20, 20}];
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[
+             DSolve[a fun1'[t] == c fun1[t]^b, fun1[t], t]], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None];
+          Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", a fun1'[t] == c fun1[t]^b}]
+          ],
+        ordinary5 :> Block[{a, b, c, d, e, f, g, t, u, x, y, z, fun1},
+          fun1 = {x, y, z}[[RandomInteger[{1, 3}]]];
+          a = RandomInteger[{-20, 20}];
+          b = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 20}];
+          c = RandomInteger[{-20, 20}];
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[
+             DSolve[b fun1'[t] + a fun1[t] == c, fun1[t], t]], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None];
+          Column[{"Solve the given \!\(\*
+StyleBox[\"ODE\",\nFontSlant->\"Italic\"]\) for " <> ToString[fun1] <>
+              "[t].", b fun1'[t] + a fun1[t] == c }]
+          ],
+        
+        
+        linear1 :> 
+         Column[{"Add the given matrices", 
+           Block[{a, b, c, d, mat1, mat2},
+            a = RandomInteger[{2, 4}];
+            b = RandomInteger[{2, 4}];
+            
+            mat1 = Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
+            
+            mat2 = Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
+            c = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
+            d = (-1)^RandomInteger[{0, 1}] RandomInteger[{1, 5}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[c mat1 + d mat2 // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            Row[{c, mat1, "+", d, mat2}]
+            ]}],
+        linear2 :> 
+         Column[{"Multiply the given matrices.", 
+           Block[{a, b, mat1, mat2},
+            a = RandomInteger[{2, 4}];
+            b = RandomInteger[{2, 4}];
+            
+            mat1 = Table[
+               RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, 
+                b}]\[Transpose];
+            
+            mat2 = Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, b}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ mat1. mat2 // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            Row[{mat1, mat2}]
+            ]}],
+        linear3 :> Column[{"Solve for the vector.",
+           Block[{x1, x2, x3, x4, x5, n, matrix, vector, sol},
+            n = RandomInteger[{2, 4}];
+            
+            matrix = 
+             Table[RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}];
+            
+            While[TrueQ[Det[matrix] == 0], 
+             matrix = 
+              Table[RandomInteger[{-10, 10}], {i, 1, n}, {k, 1, n}]];
+            vector = {{x1}, {x2}, {x3}, {x4}, {x5}}[[1 ;; n]];
+            sol = Table[{RandomInteger[{-10, 10}]}, {i, 1, n}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ sol // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            
+            Equal[Row[{matrix // MatrixForm, vector // MatrixForm}], 
+             matrix.sol // MatrixForm]
+            ]}],
+        linear4 :> Column[{"Find the determinant.", Block[{a, mat},
+            a = RandomInteger[{2, 4}];
+            
+            mat = Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ Det[mat] // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            mat
+            ]}],
+        linear5 :> 
+         Column[{"Find the eigenvectors.", Block[{a, b, i, k},
+            a = RandomInteger[{2, 4}];
+            
+            b = Table[{(-1)^
+                 RandomInteger[{0, 1}] RandomInteger[{1, 10}]}, {i, 1,
+                a}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ 
+               Eigenvectors[b.b\[Transpose]] // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            b.b\[Transpose]
+            ]}],
+        linear6 :> 
+         Column[{"Find the orthogonal projection matrix.", 
+           Block[{a, b, i, k, mat},
+            a = RandomInteger[{1, 2}];
+            b = RandomInteger[{0, 2}];
+            
+            mat = Table[
+              RandomInteger[{-20, 20}], {i, 1, a}, {k, 1, a + b}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ 
+               mat\[Transpose].Inverse[mat.mat\[Transpose]].mat // 
+                MatrixForm], FontColor -> Black, Large, 
+              FontFamily -> "Cambria"], Background -> None];
+            mat
+            ]}],
+        linear7 :> 
+         Column[{"Find the eigenvectors.", Block[{a, b, i, k, mat},
+            a = RandomInteger[{2, 4}];
+            
+            b = Table[{(-1)^
+                 RandomInteger[{0, 1}] RandomInteger[{1, 10}]}, {i, 1,
+                a}];
+            
+            mat = {LowerTriangularize, UpperTriangularize}[[
+               RandomInteger[{1, 2}]]][b.b\[Transpose]];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ Eigenvalues[mat] // MatrixForm], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            mat
+            ]}],
+        linear8 :> 
+         Column[{"Find the characteristic equation.", 
+           Block[{a, t, mat},
+            a = RandomInteger[{2, 4}];
+            
+            mat = Table[
+              RandomInteger[{-10, 10}], {i, 1, a}, {k, 1, a}];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ Det[mat - t IdentityMatrix[a]]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None];
+            mat
+            ]}],
+        
+        
+        complex1 :> 
+         Column[{"Find the resulting complex number.", 
+           Block[{a1, b1, c1, a, b, c},
+            a = RandomReal[{-2, 2}, WorkingPrecision -> 4]; 
+            b = RandomReal[{-2, 2}, WorkingPrecision -> 4]; 
+            c = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ (a + I b)^c], FontColor -> Black, 
+              Large, FontFamily -> "Cambria"], Background -> None];
+            HoldForm[(a1 + I b1)^c1] /. {a1 -> a, b1 -> b, c1 -> c}
+            ]}],
+        complex2 :> 
+         Column[{"Find the magnitude and angle of the complex \
+number.", Block[{a, b, r, \[Theta]},
+            a = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            b = RandomReal[{-50, 50}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ {r -> Sqrt[a^2 + b^2], \[Theta] ->
+                  ArcTan[a, b]}], FontColor -> Black, Large, 
+              FontFamily -> "Cambria"], Background -> None];
+            a + b I
+            ]}],
+        complex3 :> 
+         Column[{"Multiply the following complex numbers.", 
+           Block[{a, b, c, d, a1, b1, c1, d1}, 
+            a = RandomReal[{-E, E}, WorkingPrecision -> 4]; 
+            b = RandomReal[{-E, E}, WorkingPrecision -> 4]; 
+            c = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4]; 
+            d = RandomReal[{-Pi, Pi}, WorkingPrecision -> 4];
+            
+            Export["SPOILER_solutions.png", 
+             Style[TraditionalForm[ Expand[(a + b I) (c + d I)]], 
+              FontColor -> Black, Large, FontFamily -> "Cambria"], 
+             Background -> None]; 
+            HoldForm[(a1 + b1 I) (c1 + d1 I)] /. {a1 -> a, b1 -> b, 
+              c1 -> c, d1 -> d}
+            ]}],
+        complex4 :> Block[{a, b, c, z, fun1},
+          {a = RandomReal[{-50, 50}, WorkingPrecision -> 4]; 
+           b = RandomReal[{-50, 50}, WorkingPrecision -> 4]; 
+           c = RandomReal[{-10, 10}]; 
+           fun1 = {Function[x, E^x], Log, Sin, Cos, Tan, ArcSin, 
+              ArcCos, ArcTan, Function[x, x^c]}[[
+             RandomInteger[{1, 9}]]]};
+          
+          Export["SPOILER_solutions.png", 
+           Style[TraditionalForm[{z -> 
+               Quiet[InverseFunction[fun1]][a + b I]}], 
+            FontColor -> Black, Large, FontFamily -> "Cambria"], 
+           Background -> None]; 
+          Column[{"Solve for the complex value \!\(\*
 StyleBox[\"z\",\nFontSlant->\"Italic\"]\).", fun1[z] == a + b I
-           }]]
-       
-       
-       |>[ToExpression[ToLowerCase[Name] <> Number]] // 
-     TraditionalForm,
-    
-    Style[
-     Column[{"I'm sorry, but " <> ToString[name] <> 
-        " is not a recognized math topic.",
-       "The available topics include:",
-       "algebra/alg, precalculus/pre, trigonometry/tri",
-       "precalculus/pre, calculus/cal, linear/lin (linear algebra)",
-       "ordinary/ord/ode (ordinary differential equations)",
-       "and complex/com (introductory complex analysis."}], 
-     FontFamily -> "Times New Roman"]]])
+            }]]
+        
+        
+        |>[ToExpression[ToLowerCase[Name] <> Number]] // 
+      TraditionalForm,
+     
+     Style[
+      Column[{"I'm sorry, but " <> ToString[name] <> 
+         " is not a recognized math topic.",
+        "The available topics include:",
+        "algebra/alg, precalculus/pre, trigonometry/tri",
+        "precalculus/pre, calculus/cal, linear/lin (linear algebra)",
+        "ordinary/ord/ode (ordinary differential equations)",
+        "and complex/com (introductory complex analysis."}], 
+      FontFamily -> "Times New Roman"]]])
