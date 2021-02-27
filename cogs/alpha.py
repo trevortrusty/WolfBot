@@ -17,6 +17,12 @@ from paths import img_path, kernel_path, file
 from functions import crop
 import exceptions
 
+from discord_slash import SlashCommand
+from discord_slash.utils import manage_commands # Allows us to manage the command settings.
+from discord_slash import cog_ext, SlashContext
+
+guild_ids = [662383643385135165]
+
 #Enlarges image output from Wolfram calculation, and then saves as png #
 def enlarge():
     img = Image.open(img_path, 'r')
@@ -71,7 +77,48 @@ class Alpha(commands.Cog):
             embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
             await ctx.send(embed = embeds.tail_message)
                 
-                
+    # Slash Version
+    @cog_ext.cog_slash(
+    name="alpha",
+    description="this runs a Wolfram Alpha query using the Wolfram Engine",
+    options=[manage_commands.create_option(
+        name = "query",
+        description = "ask WolfBot a question",
+        option_type = 3,
+        required = True
+    )]
+    )
+    async def _alpha(self, ctx, query: str):
+        # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
+        if not '-link ' in query:
+            try:
+                '''new method'''
+                send = f'Export["{file}/output/alpha.jpg", WolframAlpha["{query}", ' + '"FullOutput", Asynchronous -> All, AppearanceElements -> {"Pods"}, IncludePods -> {"Input", "Result", "BasicInformation:PeopleData", "BasicInformation:GivenNameData", "Image:PeopleData", "IndefiniteIntegral", "Plot", "DefiniteIntegral", "VisualRepresentationOfTheIntegral", "PartialSums"}]]'
+                await asyncio.wait_for(session.evaluate(send), 40)
+
+                # Check for errors before sending result
+                await crop()
+                await ctx.send(file=discord.File(f'{file}/output/alpha.jpg'))
+
+            except asyncio.TimeoutError:
+                await ctx.send(embed = embeds.time_error)
+            except exceptions.BadQuery:
+                await ctx.send(embed = embeds.alpha_error)
+            except Exception as err:
+                await ctx.send(f'Error: {err}')
+        else:
+            q = query
+            q = q.replace('-link', '')
+            q = q.strip()
+            q.replace(' ', '+')
+            send = f'https://www.wolframalpha.com/input/?i={q}'
+            link = discord.Embed(
+                title = 'Click for Wolfram Online Result',
+                url = send
+            )
+            await ctx.send(embed = link)
+        embeds.tail_message.description = f'Query by\n{ctx.message.author.mention}'
+        await ctx.send(embed = embeds.tail_message)
 
 def setup(client):
     client.add_cog(Alpha(client))

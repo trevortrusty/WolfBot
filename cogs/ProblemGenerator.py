@@ -21,6 +21,12 @@ from paths import img_path, kernel_path, file
 from functions import crop
 import exceptions
 
+from discord_slash import SlashCommand
+from discord_slash.utils import manage_commands # Allows us to manage the command settings.
+from discord_slash import cog_ext, SlashContext
+
+guild_ids = [662383643385135165]
+
 class ProblemGenerator(commands.Cog):
 
     def __init__(self, client):
@@ -43,8 +49,25 @@ class ProblemGenerator(commands.Cog):
            
             #embeds.tail_message.description = f'Requested by\n{ctx.message.author.mention}'
             #await ctx.send(embed = embeds.tail_message)
-            
-                
+
+    @cog_ext.cog_slash(
+    name="problemgenerator",
+    description="generates a topical math problem",
+    options=[manage_commands.create_option(
+        name = "subject",
+        description = "subject",
+        option_type = 3,
+        required = True
+    )]
+    )
+    async def _problem(self, ctx, subject: str, script = script):
+        # Prepares the user input to be passed into Wolfram functions that export the output image, and limit the time of the computation 
+        await session.evaluate(script)
+        await session.evaluate(f'Export["{file}/output/problemgen.jpg", Prob[{subject}]]')
+
+        # await crop()
+        await ctx.send(file=discord.File(f'{file}/output/problemgen.jpg'))
+        await ctx.send(file=discord.File('SPOILER_solutions.png'))
 
 def setup(client):
     client.add_cog(ProblemGenerator(client))
