@@ -93,10 +93,12 @@ class Bark(commands.Cog):
 
 
     @commands.command()
-    @commands.has_any_role('Bot Henchmen', 'Development Team')
     async def stop(self, ctx):
-        session.terminate()
-
+        if(ctx.message.author.id == 570812427944329216):
+            session.terminate()
+            exit()
+        else:
+            await ctx.send("Bark off, I only take orders from my master. Woof.")
 
 def setup(client):
     client.add_cog(Bark(client))

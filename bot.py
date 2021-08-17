@@ -16,19 +16,28 @@ client.remove_command('help')
 
 @client.command()
 async def load(ctx, extension):
-    client.load_extension(f'cogs.{extension}')
-    await ctx.channel.purge(limit = 1)
-    
+    if(ctx.message.author.id == 570812427944329216):
+        client.load_extension(f'cogs.{extension}')
+        await ctx.channel.purge(limit = 1)
+    else:
+        await ctx.send("Bark off, I only take orders from my master. Woof.")
+
 @client.command()
 async def unload(ctx, extension):
-    client.unload_extension(f'cogs.{extension}')
-    await ctx.channel.purge(limit = 1)
+    if(ctx.message.author.id == 570812427944329216):
+        client.unload_extension(f'cogs.{extension}')   
+        await ctx.channel.purge(limit = 1)
+    else:
+        await ctx.send("Bark off, I only take orders from my master. Woof.")
 
 @client.command()
 async def reload(ctx, extension):
-    client.unload_extension(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
-    await ctx.channel.purge(limit = 1)
+    if(ctx.message.author.id == 570812427944329216):
+        client.unload_extension(f'cogs.{extension}')
+        client.load_extension(f'cogs.{extension}')
+        await ctx.channel.purge(limit = 1)
+    else:
+        await ctx.send("Bark off, I only take orders from my master. Woof.")
 
 for filename in os.listdir(cogs_path):
 #for filename in os.listdir('./cogs'): ## windows
