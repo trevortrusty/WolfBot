@@ -1,17 +1,53 @@
-If[Length[Flatten[List[DeleteMissing[DeleteDuplicates[
-        Evaluate[Map[Head,
-            Level[Hold[REPLACE], {0, Infinity}]]
-           /. 
-           Table[WHITELIST[[i]] -> Missing[], {i, 1, 
-             Length[WHITELIST]}]] /. Missing[][u__] -> {u}]]]]] > 0,
-  
-  "Grrr, banned function(s)! " <> 
-   ToString[
-    DeleteMissing[
-     DeleteDuplicates[
-      Evaluate[Map[Head, Level[Hold[REPLACE], {0, Infinity}]]] /.
-        Table[
-         WHITELIST[[k]] -> Missing[], {k, 1, Length[WHITELIST]}] /. 
-       Missing[][u__] -> {u}
-      ]]],
-  REPLACE]
+(*The WHITELIST determines what functions are allowed to be used in \
+the input.*)
+WHITELIST = {List, CompoundExpression, Set, SetDelayed, Blank, 
+   Pattern, Real, Complex, Hold, Sin, Cos, Plus, Times, Power, Log, 
+   Symbol, Integer, N, NIntegrate, Integrate, D, ReplaceAll, Rule};
+
+
+======
+
+
+(*HoldFirst attribute ensures that the argument doesn't evaluate \
+before passing to the body of the code.*)
+SetAttributes[whit, HoldFirst];
+
+(*The code is broken down using Level and then Head is applied to the \
+list to obtain every existing function in the code. Then all \
+functions that are contained in WHITELIST are used as a Rule template \
+to replace all occurrences of the function head with Missing[]. \
+DeleteMissing is finally called upon and if the list is longer than \
+0, there exist functions that are not accepted in the input.*)
+whit[REPLACE_] :=
+  Block[{i, k},
+   If[Length[Flatten[List[DeleteMissing[DeleteDuplicates[
+          Evaluate[Map[Head,
+              Level[Hold[REPLACE], {0, Infinity}]]
+             /. 
+             Table[WHITELIST[[i]] -> Missing[], {i, 
+               Length[WHITELIST]}]] /. Missing[][u__] -> {u}]]]]] > 0,
+    
+    "Grrr, banned function(s)! " <> 
+     ToString[
+      DeleteMissing[
+       DeleteDuplicates[
+        Evaluate[Map[Head, Level[Hold[REPLACE], {0, Infinity}]]] /.
+          
+          (*Create a set of rules replacing all instances of \
+WHITELIST function heads with Missing[]*)
+          
+          Table[WHITELIST[[k]] -> Missing[], {k, 
+            Length[WHITELIST]}] /. Missing[][u__] -> {u}
+        ]]],
+    
+    REPLACE]];
+
+
+======
+
+
+whit[
+ Import["sin.gif"];
+ F[t_] := Log[Sin[t]^2 + 2];
+ D[Cos[F[t]], t] /. t -> 2.0
+ ]
