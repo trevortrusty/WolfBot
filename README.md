@@ -1,6 +1,8 @@
 # WolfBot
 I'm a discord bot that runs Mathematica/Wolfram code and sends you the result quickly!
 
+# Developed by: Trevor Trusty and "GodsAperture"
+
 > Currently, we are not releasing the bot invitation here yet while we are still in development, but to learn more or use WolfBot, head over to our server: [WolfBot Discord Server](https://discord.gg/eyd376A)
 
 Features include:
