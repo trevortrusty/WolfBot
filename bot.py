@@ -10,7 +10,7 @@ from paths import cogs_path
 from discord_slash import SlashCommand
 from discord_slash.utils import manage_commands # Allows us to manage the command settings.
 
-client = commands.Bot(command_prefix = '*')
+client = commands.Bot(command_prefix = '.')
 slash = SlashCommand(client, sync_commands=True)
 client.remove_command('help')
 
