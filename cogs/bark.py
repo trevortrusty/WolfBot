@@ -100,7 +100,7 @@ class Bark(commands.Cog):
     name="bark",
     description="this runs Wolfram code and returns the result (NOT Wolfram Alpha)",
     options=[manage_commands.create_option(
-        name = "codeBlock",
+        name = "codeblock",
         description = "wolfram/mathematica code you want to execute",
         option_type = 3,
         required = True
